@@ -1,0 +1,364 @@
+{
+  "name": "Fingerprint-Based FPR (Morton7)",
+  "iterations": 100,
+  "threads": 48,
+  "preprocess": "preprocess_s_morton",
+  "fixture": "FPR",
+  "generator": "Random",
+  "visualization": {
+    "enable": false
+  },
+  "parameter": {
+    "execution_time": 1,
+    "k": [
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25
+    ],
+    "s": [
+      500,
+      2500,
+      25,
+      100,
+      200
+    ],
+    "n_partitions": [
+      1
+    ],
+    "n_threads": [
+      1
+    ],
+    "n_elements": [
+      {
+        "build": 1000000,
+        "lookup": 10000000,
+        "shared": 0
+      }
+    ]
+  },
+  "optimization": {
+    "Addressing": "Magic",
+    "Hashing": "Murmur",
+    "Partitioning": "Disabled",
+    "RegisterSize": "_64bit",
+    "SIMD": "Scalar",
+    "EarlyStopping": "Disabled",
+    "MultiThreading": "Disabled"
+  },
+  "benchmarks": [
+    {
+      "name": "Morton7_20_5",
+      "filter": {
+        "type": "Cuckoo",
+        "variant": "Morton7_20_5"
+      }
+    },
+    {
+      "name": "Morton7_25_5",
+      "filter": {
+        "type": "Cuckoo",
+        "variant": "Morton7_25_5"
+      }
+    },
+    {
+      "name": "Morton7_30_5",
+      "filter": {
+        "type": "Cuckoo",
+        "variant": "Morton7_30_5"
+      }
+    },
+    {
+      "name": "Morton7_35_5",
+      "filter": {
+        "type": "Cuckoo",
+        "variant": "Morton7_35_5"
+      }
+    },
+    {
+      "name": "Morton7_40_5",
+      "filter": {
+        "type": "Cuckoo",
+        "variant": "Morton7_40_5"
+      }
+    },
+    {
+      "name": "Morton7_45_5",
+      "filter": {
+        "type": "Cuckoo",
+        "variant": "Morton7_45_5"
+      }
+    },
+    {
+      "name": "Morton7_20_10",
+      "filter": {
+        "type": "Cuckoo",
+        "variant": "Morton7_20_10"
+      }
+    },
+    {
+      "name": "Morton7_25_10",
+      "filter": {
+        "type": "Cuckoo",
+        "variant": "Morton7_25_10"
+      }
+    },
+    {
+      "name": "Morton7_30_10",
+      "filter": {
+        "type": "Cuckoo",
+        "variant": "Morton7_30_10"
+      }
+    },
+    {
+      "name": "Morton7_35_10",
+      "filter": {
+        "type": "Cuckoo",
+        "variant": "Morton7_35_10"
+      }
+    },
+    {
+      "name": "Morton7_40_10",
+      "filter": {
+        "type": "Cuckoo",
+        "variant": "Morton7_40_10"
+      }
+    },
+    {
+      "name": "Morton7_45_10",
+      "filter": {
+        "type": "Cuckoo",
+        "variant": "Morton7_45_10"
+      }
+    },
+    {
+      "name": "Morton7_20_15",
+      "filter": {
+        "type": "Cuckoo",
+        "variant": "Morton7_20_15"
+      }
+    },
+    {
+      "name": "Morton7_25_15",
+      "filter": {
+        "type": "Cuckoo",
+        "variant": "Morton7_25_15"
+      }
+    },
+    {
+      "name": "Morton7_30_15",
+      "filter": {
+        "type": "Cuckoo",
+        "variant": "Morton7_30_15"
+      }
+    },
+    {
+      "name": "Morton7_35_15",
+      "filter": {
+        "type": "Cuckoo",
+        "variant": "Morton7_35_15"
+      }
+    },
+    {
+      "name": "Morton7_40_15",
+      "filter": {
+        "type": "Cuckoo",
+        "variant": "Morton7_40_15"
+      }
+    },
+    {
+      "name": "Morton7_45_15",
+      "filter": {
+        "type": "Cuckoo",
+        "variant": "Morton7_45_15"
+      }
+    },
+    {
+      "name": "Morton7_20_20",
+      "filter": {
+        "type": "Cuckoo",
+        "variant": "Morton7_20_20"
+      }
+    },
+    {
+      "name": "Morton7_25_20",
+      "filter": {
+        "type": "Cuckoo",
+        "variant": "Morton7_25_20"
+      }
+    },
+    {
+      "name": "Morton7_30_20",
+      "filter": {
+        "type": "Cuckoo",
+        "variant": "Morton7_30_20"
+      }
+    },
+    {
+      "name": "Morton7_35_20",
+      "filter": {
+        "type": "Cuckoo",
+        "variant": "Morton7_35_20"
+      }
+    },
+    {
+      "name": "Morton7_40_20",
+      "filter": {
+        "type": "Cuckoo",
+        "variant": "Morton7_40_20"
+      }
+    },
+    {
+      "name": "Morton7_45_20",
+      "filter": {
+        "type": "Cuckoo",
+        "variant": "Morton7_45_20"
+      }
+    },
+    {
+      "name": "Morton7_20_25",
+      "filter": {
+        "type": "Cuckoo",
+        "variant": "Morton7_20_25"
+      }
+    },
+    {
+      "name": "Morton7_25_25",
+      "filter": {
+        "type": "Cuckoo",
+        "variant": "Morton7_25_25"
+      }
+    },
+    {
+      "name": "Morton7_30_25",
+      "filter": {
+        "type": "Cuckoo",
+        "variant": "Morton7_30_25"
+      }
+    },
+    {
+      "name": "Morton7_35_25",
+      "filter": {
+        "type": "Cuckoo",
+        "variant": "Morton7_35_25"
+      }
+    },
+    {
+      "name": "Morton7_40_25",
+      "filter": {
+        "type": "Cuckoo",
+        "variant": "Morton7_40_25"
+      }
+    },
+    {
+      "name": "Morton7_45_25",
+      "filter": {
+        "type": "Cuckoo",
+        "variant": "Morton7_45_25"
+      }
+    },
+    {
+      "name": "Morton7_20_30",
+      "filter": {
+        "type": "Cuckoo",
+        "variant": "Morton7_20_30"
+      }
+    },
+    {
+      "name": "Morton7_25_30",
+      "filter": {
+        "type": "Cuckoo",
+        "variant": "Morton7_25_30"
+      }
+    },
+    {
+      "name": "Morton7_30_30",
+      "filter": {
+        "type": "Cuckoo",
+        "variant": "Morton7_30_30"
+      }
+    },
+    {
+      "name": "Morton7_35_30",
+      "filter": {
+        "type": "Cuckoo",
+        "variant": "Morton7_35_30"
+      }
+    },
+    {
+      "name": "Morton7_40_30",
+      "filter": {
+        "type": "Cuckoo",
+        "variant": "Morton7_40_30"
+      }
+    },
+    {
+      "name": "Morton7_45_30",
+      "filter": {
+        "type": "Cuckoo",
+        "variant": "Morton7_45_30"
+      }
+    },
+    {
+      "name": "Morton7_20_35",
+      "filter": {
+        "type": "Cuckoo",
+        "variant": "Morton7_20_35"
+      }
+    },
+    {
+      "name": "Morton7_25_35",
+      "filter": {
+        "type": "Cuckoo",
+        "variant": "Morton7_25_35"
+      }
+    },
+    {
+      "name": "Morton7_30_35",
+      "filter": {
+        "type": "Cuckoo",
+        "variant": "Morton7_30_35"
+      }
+    },
+    {
+      "name": "Morton7_35_35",
+      "filter": {
+        "type": "Cuckoo",
+        "variant": "Morton7_35_35"
+      }
+    },
+    {
+      "name": "Morton7_40_35",
+      "filter": {
+        "type": "Cuckoo",
+        "variant": "Morton7_40_35"
+      }
+    },
+    {
+      "name": "Morton7_45_35",
+      "filter": {
+        "type": "Cuckoo",
+        "variant": "Morton7_45_35"
+      }
+    }
+  ]
+}

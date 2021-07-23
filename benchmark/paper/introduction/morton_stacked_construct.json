@@ -1,0 +1,79 @@
+{
+  "name": "Stacked (Morton, Construct)",
+  "iterations": 5,
+  "fixture": "Construct",
+  "generator": "Random",
+  "visualization": {
+    "enable": false
+  },
+  "parameter": {
+    "k": [
+      8
+    ],
+    "s": [
+      138
+    ],
+    "n_partitions": [
+      1
+    ],
+    "n_threads": [
+      1
+    ],
+    "n_elements": [
+      {
+        "build": 100000000,
+        "lookup": 1000000000,
+        "shared": 10
+      }
+    ]
+  },
+  "optimization": {
+    "Addressing": "Lemire",
+    "Hashing": "Murmur",
+    "Partitioning": null,
+    "RegisterSize": "_64bit",
+    "SIMD": null,
+    "EarlyStopping": "Disabled",
+    "MultiThreading": "Disabled"
+  },
+  "benchmarks": [
+    {
+      "name": "InitialiseData",
+      "filter": {
+        "type": "Cuckoo",
+        "variant": "MortonOpt"
+      },
+      "optimization": {
+        "Partitioning": "Disabled",
+        "SIMD": "Scalar"
+      }
+    },
+    {
+      "name": "Morton_Lemire_Murmur",
+      "filter": {
+        "type": "Cuckoo",
+        "variant": "MortonOpt"
+      },
+      "optimization": {
+        "Partitioning": "Disabled",
+        "SIMD": "Scalar"
+      }
+    },
+    {
+      "name": "Morton_Lemire_Murmur_Partitioned",
+      "filter": {
+        "type": "Cuckoo",
+        "variant": "MortonOpt"
+      },
+      "optimization": {
+        "Partitioning": "Enabled",
+        "SIMD": "Scalar"
+      },
+      "parameter": {
+        "n_partitions": [
+          1024
+        ]
+      }
+    }
+  ]
+}

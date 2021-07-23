@@ -1,0 +1,224 @@
+{
+  "name": "SIMD (Count)",
+  "iterations": 5,
+  "preprocess": "preprocess_n_elements_log",
+  "fixture": "Count",
+  "generator": "RandomHuge",
+  "visualization": {
+    "enable": false
+  },
+  "parameter": {
+    "k": [
+      8
+    ],
+    "s": null,
+    "n_partitions": [
+      1,
+      2,
+      4,
+      8,
+      16,
+      32,
+      64,
+      128,
+      256,
+      512,
+      1024,
+      2048,
+      4096,
+      8192,
+      16384
+    ],
+    "n_threads": [
+      1
+    ],
+    "n_elements": [
+      {
+        "build": 10,
+        "lookup": 10,
+        "shared": 10
+      },
+      {
+        "build": 3,
+        "lookup": 3,
+        "shared": 10
+      },
+      {
+        "build": 9,
+        "lookup": 9,
+        "shared": 10
+      },
+      {
+        "build": 10,
+        "lookup": 10,
+        "shared": 10
+      },
+      {
+        "build": 1000,
+        "lookup": 100000000,
+        "shared": 10
+      }
+    ]
+  },
+  "optimization": {
+    "Addressing": "Lemire",
+    "Hashing": "Murmur",
+    "Partitioning": null,
+    "RegisterSize": "_64bit",
+    "SIMD": "AVX512",
+    "EarlyStopping": "Disabled",
+    "MultiThreading": "Disabled"
+  },
+  "benchmarks": [
+    {
+      "name": "InitialiseData",
+      "filter": {
+        "type": "Bloom",
+        "variant": "Blocked512"
+      },
+      "optimization": {
+        "Partitioning": "Disabled"
+      },
+      "parameter": {
+        "s": [
+          150
+        ],
+        "n_partitions": [
+          1
+        ]
+      }
+    },
+    {
+      "name": "BloomBlockedSIMD",
+      "filter": {
+        "type": "Bloom",
+        "variant": "Blocked512"
+      },
+      "optimization": {
+        "Partitioning": "Disabled"
+      },
+      "parameter": {
+        "s": [
+          150
+        ],
+        "n_partitions": [
+          1
+        ]
+      }
+    },
+    {
+      "name": "CuckooSIMD",
+      "filter": {
+        "type": "Cuckoo",
+        "variant": "CuckooOpt"
+      },
+      "optimization": {
+        "Partitioning": "Disabled"
+      },
+      "parameter": {
+        "s": [
+          106
+        ],
+        "n_partitions": [
+          1
+        ]
+      }
+    },
+    {
+      "name": "MortonSIMD",
+      "filter": {
+        "type": "Cuckoo",
+        "variant": "MortonOpt"
+      },
+      "optimization": {
+        "Partitioning": "Disabled"
+      },
+      "parameter": {
+        "s": [
+          138
+        ],
+        "n_partitions": [
+          1
+        ]
+      }
+    },
+    {
+      "name": "XorSIMD",
+      "filter": {
+        "type": "Xor",
+        "variant": "Standard"
+      },
+      "optimization": {
+        "Partitioning": "Disabled"
+      },
+      "parameter": {
+        "s": [
+          123
+        ],
+        "n_partitions": [
+          1
+        ]
+      }
+    },
+    {
+      "name": "BloomBlockedSIMDPartitioned",
+      "filter": {
+        "type": "Bloom",
+        "variant": "Blocked512"
+      },
+      "optimization": {
+        "Partitioning": "Enabled"
+      },
+      "parameter": {
+        "s": [
+          150
+        ]
+      }
+    },
+    {
+      "name": "CuckooSIMDPartitioned",
+      "filter": {
+        "type": "Cuckoo",
+        "variant": "CuckooOpt"
+      },
+      "optimization": {
+        "Partitioning": "Enabled"
+      },
+      "parameter": {
+        "s": [
+          106
+        ]
+      }
+    },
+    {
+      "name": "MortonSIMDPartitioned",
+      "filter": {
+        "type": "Cuckoo",
+        "variant": "MortonOpt"
+      },
+      "optimization": {
+        "Partitioning": "Enabled"
+      },
+      "parameter": {
+        "s": [
+          138
+        ]
+      }
+    },
+    {
+      "name": "XorSIMDPartitioned",
+      "filter": {
+        "type": "Xor",
+        "variant": "Standard"
+      },
+      "optimization": {
+        "Partitioning": "Enabled"
+      },
+      "parameter": {
+        "s": [
+          123
+        ]
+      }
+    }
+  ]
+}

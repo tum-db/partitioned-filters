@@ -1,0 +1,58 @@
+{
+  "name": "Competitors (Xor, Construct)",
+  "iterations": 5,
+  "fixture": "Construct",
+  "generator": "Random",
+  "visualization": {
+    "enable": false
+  },
+  "parameter": {
+    "k": [
+      8
+    ],
+    "s": [
+      123
+    ],
+    "n_partitions": [
+      1
+    ],
+    "n_threads": [
+      1
+    ],
+    "n_elements": [
+      1000000
+    ]
+  },
+  "optimization": {
+    "Addressing": "Lemire",
+    "Hashing": "Murmur",
+    "Partitioning": "Disabled",
+    "RegisterSize": "_64bit",
+    "SIMD": "Scalar",
+    "EarlyStopping": "Disabled",
+    "MultiThreading": "Disabled"
+  },
+  "benchmarks": [
+    {
+      "name": "InitialiseData",
+      "filter": {
+        "type": "Xor",
+        "variant": "Standard"
+      }
+    },
+    {
+      "name": "Fastfilter_Xor_Standard_Scalar",
+      "filter": {
+        "type": "FastfilterXor",
+        "variant": "Standard"
+      }
+    },
+    {
+      "name": "Xor_Standard_Scalar",
+      "filter": {
+        "type": "Xor",
+        "variant": "Standard"
+      }
+    }
+  ]
+}

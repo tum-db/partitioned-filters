@@ -1,0 +1,310 @@
+{
+  "name": "Bloom Count 100M",
+  "iterations": 5,
+  "preprocess": "preprocess_s",
+  "fixture": "MTCount",
+  "generator": "Random",
+  "visualization": {
+    "enable": false
+  },
+  "parameter": {
+    "k": null,
+    "s": [
+      400,
+      2600,
+      100,
+      100,
+      2600
+    ],
+    "n_partitions": [
+      1024
+    ],
+    "n_threads": [
+      10
+    ],
+    "n_elements": [
+      {
+        "build": 100000000,
+        "lookup": 100000000,
+        "shared": 10
+      }
+    ]
+  },
+  "optimization": {
+    "Addressing": "Lemire",
+    "Hashing": "Murmur",
+    "Partitioning": null,
+    "RegisterSize": "_64bit",
+    "SIMD": null,
+    "EarlyStopping": "Disabled",
+    "MultiThreading": "Disabled"
+  },
+  "benchmarks": [
+    {
+      "name": "Bloom_Naive64_Nonpart_Scalar",
+      "filter": {
+        "type": "Bloom",
+        "variant": "Naive64"
+      },
+      "optimization": {
+        "Partitioning": "Disabled",
+        "SIMD": "Scalar"
+      },
+      "parameter": {
+        "k": [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25 ]
+      }
+    },
+    {
+      "name": "Bloom_Naive64_Nonpart_AVX512",
+      "filter": {
+        "type": "Bloom",
+        "variant": "Naive64"
+      },
+      "optimization": {
+        "Partitioning": "Disabled",
+        "SIMD": "AVX512"
+      },
+      "parameter": {
+        "k": [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25 ]
+      }
+    },
+    {
+      "name": "Bloom_Blocked64_Nonpart_Scalar",
+      "filter": {
+        "type": "Bloom",
+        "variant": "Blocked64"
+      },
+      "optimization": {
+        "Partitioning": "Disabled",
+        "SIMD": "Scalar"
+      },
+      "parameter": {
+        "k": [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25 ]
+      }
+    },
+    {
+      "name": "Bloom_Blocked64_Nonpart_AVX512",
+      "filter": {
+        "type": "Bloom",
+        "variant": "Blocked64"
+      },
+      "optimization": {
+        "Partitioning": "Disabled",
+        "SIMD": "AVX512"
+      },
+      "parameter": {
+        "k": [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25 ]
+      }
+    },
+    {
+      "name": "Bloom_Blocked512_Nonpart_Scalar",
+      "filter": {
+        "type": "Bloom",
+        "variant": "Blocked512"
+      },
+      "optimization": {
+        "Partitioning": "Disabled",
+        "SIMD": "Scalar"
+      },
+      "parameter": {
+        "k": [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25 ]
+      }
+    },
+    {
+      "name": "Bloom_Blocked512_Nonpart_AVX512",
+      "filter": {
+        "type": "Bloom",
+        "variant": "Blocked512"
+      },
+      "optimization": {
+        "Partitioning": "Disabled",
+        "SIMD": "AVX512"
+      },
+      "parameter": {
+        "k": [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25 ]
+      }
+    },
+    {
+      "name": "Bloom_Sectorized128_Nonpart_Scalar",
+      "filter": {
+        "type": "Bloom",
+        "variant": "Sectorized128"
+      },
+      "optimization": {
+        "Partitioning": "Disabled",
+        "SIMD": "Scalar"
+      },
+      "parameter": {
+        "k": [ 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24 ]
+      }
+    },
+    {
+      "name": "Bloom_Sectorized128_Nonpart_AVX512",
+      "filter": {
+        "type": "Bloom",
+        "variant": "Sectorized128"
+      },
+      "optimization": {
+        "Partitioning": "Disabled",
+        "SIMD": "AVX512"
+      },
+      "parameter": {
+        "k": [ 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24 ]
+      }
+    },
+    {
+      "name": "Bloom_Sectorized256_Nonpart_Scalar",
+      "filter": {
+        "type": "Bloom",
+        "variant": "Sectorized256"
+      },
+      "optimization": {
+        "Partitioning": "Disabled",
+        "SIMD": "Scalar"
+      },
+      "parameter": {
+        "k": [ 4, 8, 12, 16, 20, 24 ]
+      }
+    },
+    {
+      "name": "Bloom_Sectorized256_Nonpart_AVX512",
+      "filter": {
+        "type": "Bloom",
+        "variant": "Sectorized256"
+      },
+      "optimization": {
+        "Partitioning": "Disabled",
+        "SIMD": "AVX512"
+      },
+      "parameter": {
+        "k": [ 4, 8, 12, 16, 20, 24 ]
+      }
+    },
+    {
+      "name": "Bloom_Sectorized512_Nonpart_Scalar",
+      "filter": {
+        "type": "Bloom",
+        "variant": "Sectorized512"
+      },
+      "optimization": {
+        "Partitioning": "Disabled",
+        "SIMD": "Scalar"
+      },
+      "parameter": {
+        "k": [ 8, 16, 24 ]
+      }
+    },
+    {
+      "name": "Bloom_Sectorized512_Nonpart_AVX512",
+      "filter": {
+        "type": "Bloom",
+        "variant": "Sectorized512"
+      },
+      "optimization": {
+        "Partitioning": "Disabled",
+        "SIMD": "AVX512"
+      },
+      "parameter": {
+        "k": [ 8, 16, 24 ]
+      }
+    },
+    {
+      "name": "Bloom_Grouped2_Nonpart_Scalar",
+      "filter": {
+        "type": "Bloom",
+        "variant": "Grouped2"
+      },
+      "optimization": {
+        "Partitioning": "Disabled",
+        "SIMD": "Scalar"
+      },
+      "parameter": {
+        "k": [ 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24 ]
+      }
+    },
+    {
+      "name": "Bloom_Grouped2_Nonpart_AVX512",
+      "filter": {
+        "type": "Bloom",
+        "variant": "Grouped2"
+      },
+      "optimization": {
+        "Partitioning": "Disabled",
+        "SIMD": "AVX512"
+      },
+      "parameter": {
+        "k": [ 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24 ]
+      }
+    },
+    {
+      "name": "Bloom_Grouped4_Nonpart_Scalar",
+      "filter": {
+        "type": "Bloom",
+        "variant": "Grouped4"
+      },
+      "optimization": {
+        "Partitioning": "Disabled",
+        "SIMD": "Scalar"
+      },
+      "parameter": {
+        "k": [ 4, 8, 12, 16, 20, 24 ]
+      }
+    },
+    {
+      "name": "Bloom_Grouped4_Nonpart_AVX512",
+      "filter": {
+        "type": "Bloom",
+        "variant": "Grouped4"
+      },
+      "optimization": {
+        "Partitioning": "Disabled",
+        "SIMD": "AVX512"
+      },
+      "parameter": {
+        "k": [ 4, 8, 12, 16, 20, 24 ]
+      }
+    },
+    {
+      "name": "Bloom_Sectorized128Vertical_Nonpart_AVX512",
+      "filter": {
+        "type": "Bloom",
+        "variant": "Sectorized128Vertical"
+      },
+      "optimization": {
+        "Partitioning": "Disabled",
+        "SIMD": "AVX512"
+      },
+      "parameter": {
+        "k": [ 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24 ]
+      }
+    },
+    {
+      "name": "Bloom_Sectorized256Vertical_Nonpart_AVX512",
+      "filter": {
+        "type": "Bloom",
+        "variant": "Sectorized256Vertical"
+      },
+      "optimization": {
+        "Partitioning": "Disabled",
+        "SIMD": "AVX512"
+      },
+      "parameter": {
+        "k": [ 4, 8, 12, 16, 20, 24 ]
+      }
+    },
+    {
+      "name": "Bloom_Sectorized512Vertical_Nonpart_AVX512",
+      "filter": {
+        "type": "Bloom",
+        "variant": "Sectorized512Vertical"
+      },
+      "optimization": {
+        "Partitioning": "Disabled",
+        "SIMD": "AVX512"
+      },
+      "parameter": {
+        "k": [ 8, 16, 24 ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,294 @@
+{
+  "name": "Hashing (Count)",
+  "iterations": 5,
+  "fixture": "Count",
+  "generator": "Random",
+  "visualization": {
+    "enable": false
+  },
+  "parameter": {
+    "k": [
+      8
+    ],
+    "s": null,
+    "n_partitions": [
+      1
+    ],
+    "n_threads": [
+      1
+    ],
+    "n_elements": [
+      {
+        "build": 10000000,
+        "lookup": 100000000,
+        "shared": 10
+      }
+    ]
+  },
+  "optimization": {
+    "Addressing": "Lemire",
+    "Hashing": null,
+    "Partitioning": "Disabled",
+    "RegisterSize": "_64bit",
+    "SIMD": "Scalar",
+    "EarlyStopping": "Disabled",
+    "MultiThreading": "Disabled"
+  },
+  "benchmarks": [
+    {
+      "name": "InitialiseData",
+      "filter": {
+        "type": "Bloom",
+        "variant": "Blocked512"
+      },
+      "optimization": {
+        "Hashing": "Cityhash"
+      },
+      "parameter": {
+        "s": [
+          150
+        ]
+      }
+    },
+    {
+      "name": "BloomBlockedCityhash",
+      "filter": {
+        "type": "Bloom",
+        "variant": "Blocked512"
+      },
+      "optimization": {
+        "Hashing": "Cityhash"
+      },
+      "parameter": {
+        "s": [
+          150
+        ]
+      }
+    },
+    {
+      "name": "BloomBlockedMurmur",
+      "filter": {
+        "type": "Bloom",
+        "variant": "Blocked512"
+      },
+      "optimization": {
+        "Hashing": "Murmur"
+      },
+      "parameter": {
+        "s": [
+          150
+        ]
+      }
+    },
+    {
+      "name": "BloomBlockedFasthash",
+      "filter": {
+        "type": "Bloom",
+        "variant": "Blocked512"
+      },
+      "optimization": {
+        "Hashing": "Fasthash"
+      },
+      "parameter": {
+        "s": [
+          150
+        ]
+      }
+    },
+    {
+      "name": "BloomBlockedMul",
+      "filter": {
+        "type": "Bloom",
+        "variant": "Blocked512"
+      },
+      "optimization": {
+        "Hashing": "Mul"
+      },
+      "parameter": {
+        "s": [
+          150
+        ]
+      }
+    },
+    {
+      "name": "CuckooCityhash",
+      "filter": {
+        "type": "Cuckoo",
+        "variant": "CuckooOpt"
+      },
+      "optimization": {
+        "Hashing": "Cityhash"
+      },
+      "parameter": {
+        "s": [
+          106
+        ]
+      }
+    },
+    {
+      "name": "CuckooMurmur",
+      "filter": {
+        "type": "Cuckoo",
+        "variant": "CuckooOpt"
+      },
+      "optimization": {
+        "Hashing": "Murmur"
+      },
+      "parameter": {
+        "s": [
+          106
+        ]
+      }
+    },
+    {
+      "name": "CuckooFasthash",
+      "filter": {
+        "type": "Cuckoo",
+        "variant": "CuckooOpt"
+      },
+      "optimization": {
+        "Hashing": "Fasthash"
+      },
+      "parameter": {
+        "s": [
+          106
+        ]
+      }
+    },
+    {
+      "name": "CuckooMul",
+      "filter": {
+        "type": "Cuckoo",
+        "variant": "CuckooOpt"
+      },
+      "optimization": {
+        "Hashing": "Mul"
+      },
+      "parameter": {
+        "s": [
+          106
+        ]
+      }
+    },
+    {
+      "name": "MortonCityhash",
+      "filter": {
+        "type": "Cuckoo",
+        "variant": "MortonOpt"
+      },
+      "optimization": {
+        "Hashing": "Cityhash"
+      },
+      "parameter": {
+        "s": [
+          138
+        ]
+      }
+    },
+    {
+      "name": "MortonMurmur",
+      "filter": {
+        "type": "Cuckoo",
+        "variant": "MortonOpt"
+      },
+      "optimization": {
+        "Hashing": "Murmur"
+      },
+      "parameter": {
+        "s": [
+          138
+        ]
+      }
+    },
+    {
+      "name": "MortonFasthash",
+      "filter": {
+        "type": "Cuckoo",
+        "variant": "MortonOpt"
+      },
+      "optimization": {
+        "Hashing": "Fasthash"
+      },
+      "parameter": {
+        "s": [
+          138
+        ]
+      }
+    },
+    {
+      "name": "MortonMul",
+      "filter": {
+        "type": "Cuckoo",
+        "variant": "MortonOpt"
+      },
+      "optimization": {
+        "Hashing": "Mul"
+      },
+      "parameter": {
+        "s": [
+          138
+        ]
+      }
+    },
+    {
+      "name": "XorCityhash",
+      "filter": {
+        "type": "Xor",
+        "variant": "Standard"
+      },
+      "optimization": {
+        "Hashing": "Cityhash"
+      },
+      "parameter": {
+        "s": [
+          123
+        ]
+      }
+    },
+    {
+      "name": "XorMurmur",
+      "filter": {
+        "type": "Xor",
+        "variant": "Standard"
+      },
+      "optimization": {
+        "Hashing": "Murmur"
+      },
+      "parameter": {
+        "s": [
+          123
+        ]
+      }
+    },
+    {
+      "name": "XorFasthash",
+      "filter": {
+        "type": "Xor",
+        "variant": "Standard"
+      },
+      "optimization": {
+        "Hashing": "Fasthash"
+      },
+      "parameter": {
+        "s": [
+          123
+        ]
+      }
+    },
+    {
+      "name": "XorMul",
+      "filter": {
+        "type": "Xor",
+        "variant": "Standard"
+      },
+      "optimization": {
+        "Hashing": "Mul"
+      },
+      "parameter": {
+        "s": [
+          123
+        ]
+      }
+    }
+  ]
+}

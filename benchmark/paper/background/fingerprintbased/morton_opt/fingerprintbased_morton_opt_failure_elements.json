@@ -1,0 +1,91 @@
+{
+  "name": "Fingerprint-Based Failure Elements (MortonOpt)",
+  "iterations": 100,
+  "threads": 32,
+  "preprocess": "preprocess_n_elements_log",
+  "fixture": "FPR",
+  "generator": "Prime",
+  "visualization": {
+    "enable": false
+  },
+  "parameter": {
+    "execution_time": 1,
+    "k": [
+      8
+    ],
+    "s": [
+      120,
+      121,
+      122,
+      123,
+      124,
+      125,
+      126,
+      127,
+      128,
+      129,
+      130,
+      131,
+      132,
+      133,
+      134,
+      135,
+      136,
+      137,
+      138,
+      139,
+      140,
+      141,
+      142,
+      143,
+      144,
+      145,
+      146,
+      147,
+      148,
+      149,
+      150,
+      155,
+      160,
+      165,
+      170,
+      175,
+      180,
+      185,
+      190,
+      195,
+      200
+    ],
+    "n_partitions": [
+      1
+    ],
+    "n_threads": [
+      1
+    ],
+    "n_elements": [
+      10,
+      1,
+      7,
+      10,
+      0
+    ]
+  },
+  "optimization": {
+    "Addressing": "Magic",
+    "Hashing": "Murmur",
+    "Partitioning": "Disabled",
+    "RegisterSize": "_64bit",
+    "SIMD": "Scalar",
+    "EarlyStopping": "Disabled",
+    "MultiThreading": "Disabled"
+  },
+  "benchmarks": [
+    {
+      "name": "MortonOpt",
+      "filter": {
+        "type": "Cuckoo",
+        "variant": "MortonOpt"
+      }
+    }
+  ]
+}

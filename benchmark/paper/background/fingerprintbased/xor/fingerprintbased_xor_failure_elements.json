@@ -1,0 +1,68 @@
+{
+  "name": "Fingerprint-Based Failure Elements (Xor)",
+  "iterations": 100,
+  "threads": 20,
+  "preprocess": "preprocess_n_elements_log",
+  "fixture": "FPR",
+  "generator": "Prime",
+  "visualization": {
+    "enable": false
+  },
+  "parameter": {
+    "execution_time": 1,
+    "k": [
+      8
+    ],
+    "s": null,
+    "n_partitions": [
+      1
+    ],
+    "n_threads": [
+      1
+    ],
+    "n_elements": [
+      10,
+      1,
+      7,
+      10,
+      0
+    ]
+  },
+  "optimization": {
+    "Addressing": "Magic",
+    "Hashing": "Murmur",
+    "Partitioning": "Disabled",
+    "RegisterSize": "_64bit",
+    "SIMD": "Scalar",
+    "EarlyStopping": "Disabled",
+    "MultiThreading": "Disabled"
+  },
+  "benchmarks": [
+    {
+      "name": "Xor",
+      "filter": {
+        "type": "Xor",
+        "variant": "Standard"
+      },
+      "parameter": {
+        "s": [
+          120,
+          121,
+          122,
+          123,
+          124,
+          125,
+          126,
+          127,
+          128,
+          129,
+          130,
+          135,
+          140,
+          145,
+          150
+        ]
+      }
+    }
+  ]
+}

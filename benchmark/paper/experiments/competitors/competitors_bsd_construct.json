@@ -1,0 +1,128 @@
+{
+  "name": "Competitors (BSD Bloom, Construct)",
+  "iterations": 5,
+  "fixture": "Construct",
+  "generator": "Random",
+  "visualization": {
+    "enable": false
+  },
+  "parameter": {
+    "k": [
+      8
+    ],
+    "s": [
+      150
+    ],
+    "n_partitions": [
+      1
+    ],
+    "n_threads": [
+      1
+    ],
+    "n_elements": [
+      1000000
+    ]
+  },
+  "optimization": {
+    "Addressing": null,
+    "Hashing": null,
+    "Partitioning": "Disabled",
+    "RegisterSize": null,
+    "SIMD": null,
+    "EarlyStopping": "Disabled",
+    "MultiThreading": "Disabled"
+  },
+  "benchmarks": [
+    {
+      "name": "InitialiseData",
+      "filter": {
+        "type": "Bloom",
+        "variant": "Blocked32"
+      },
+      "optimization": {
+        "Addressing": "Magic",
+        "Hashing": "Mul",
+        "RegisterSize": "_32bit",
+        "SIMD": "Scalar"
+      }
+    },
+    {
+      "name": "Bloom_Blocked32",
+      "filter": {
+        "type": "Bloom",
+        "variant": "Blocked32"
+      },
+      "optimization": {
+        "Addressing": "Magic",
+        "Hashing": "Mul",
+        "RegisterSize": "_32bit",
+        "SIMD": "Scalar"
+      }
+    },
+    {
+      "name": "BSD_Bloom_Blocked32",
+      "filter": {
+        "type": "BSDBloom",
+        "variant": "Blocked32"
+      },
+      "optimization": {
+        "Addressing": "Magic",
+        "Hashing": "Mul",
+        "RegisterSize": "_32bit",
+        "SIMD": "Scalar"
+      }
+    },
+    {
+      "name": "Bloom_Grouped2",
+      "filter": {
+        "type": "Bloom",
+        "variant": "Grouped2"
+      },
+      "optimization": {
+        "Addressing": "Magic",
+        "Hashing": "Mul",
+        "RegisterSize": "_32bit",
+        "SIMD": "Scalar"
+      }
+    },
+    {
+      "name": "BSD_Bloom_Grouped2",
+      "filter": {
+        "type": "BSDBloom",
+        "variant": "Grouped2"
+      },
+      "optimization": {
+        "Addressing": "Magic",
+        "Hashing": "Mul",
+        "RegisterSize": "_32bit",
+        "SIMD": "Scalar"
+      }
+    },
+    {
+      "name": "Bloom_Blocked512",
+      "filter": {
+        "type": "Bloom",
+        "variant": "Blocked512"
+      },
+      "optimization": {
+        "Addressing": "Magic",
+        "Hashing": "Mul",
+        "RegisterSize": "_32bit",
+        "SIMD": "Scalar"
+      }
+    },
+    {
+      "name": "BSD_Bloom_Blocked512",
+      "filter": {
+        "type": "BSDBloom",
+        "variant": "Blocked512"
+      },
+      "optimization": {
+        "Addressing": "Magic",
+        "Hashing": "Mul",
+        "RegisterSize": "_32bit",
+        "SIMD": "Scalar"
+      }
+    }
+  ]
+}

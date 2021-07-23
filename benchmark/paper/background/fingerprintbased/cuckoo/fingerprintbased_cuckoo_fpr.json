@@ -1,0 +1,210 @@
+{
+  "name": "Fingerprint-Based FPR (Cuckoo)",
+  "iterations": 100,
+  "threads": 32,
+  "preprocess": "preprocess_s",
+  "fixture": "FPR",
+  "generator": "Random",
+  "visualization": {
+    "enable": false
+  },
+  "parameter": {
+    "execution_time": 1,
+    "k": null,
+    "s": [
+      500,
+      2500,
+      25,
+      100,
+      200
+    ],
+    "n_partitions": [
+      1
+    ],
+    "n_threads": [
+      1
+    ],
+    "n_elements": [
+      {
+        "build": 1000000,
+        "lookup": 10000000,
+        "shared": 0
+      }
+    ]
+  },
+  "optimization": {
+    "Addressing": "Magic",
+    "Hashing": "Murmur",
+    "Partitioning": "Disabled",
+    "RegisterSize": "_64bit",
+    "SIMD": "Scalar",
+    "EarlyStopping": "Disabled",
+    "MultiThreading": "Disabled"
+  },
+  "benchmarks": [
+    {
+      "name": "Cuckoo2",
+      "filter": {
+        "type": "Cuckoo",
+        "variant": "Standard2"
+      },
+      "parameter": {
+        "k": [
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25
+        ]
+      }
+    },
+    {
+      "name": "Cuckoo3",
+      "filter": {
+        "type": "Cuckoo",
+        "variant": "Standard3"
+      },
+      "parameter": {
+        "k": [
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21
+        ]
+      }
+    },
+    {
+      "name": "Cuckoo4",
+      "filter": {
+        "type": "Cuckoo",
+        "variant": "Standard4"
+      },
+      "parameter": {
+        "k": [
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16
+        ]
+      }
+    },
+    {
+      "name": "Cuckoo5",
+      "filter": {
+        "type": "Cuckoo",
+        "variant": "Standard5"
+      },
+      "parameter": {
+        "k": [
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12
+        ]
+      }
+    },
+    {
+      "name": "Cuckoo6",
+      "filter": {
+        "type": "Cuckoo",
+        "variant": "Standard6"
+      },
+      "parameter": {
+        "k": [
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10
+        ]
+      }
+    },
+    {
+      "name": "Cuckoo7",
+      "filter": {
+        "type": "Cuckoo",
+        "variant": "Standard7"
+      },
+      "parameter": {
+        "k": [
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9
+        ]
+      }
+    },
+    {
+      "name": "Cuckoo8",
+      "filter": {
+        "type": "Cuckoo",
+        "variant": "Standard8"
+      },
+      "parameter": {
+        "k": [
+          3,
+          4,
+          5,
+          6,
+          7,
+          8
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,159 @@
+{
+  "name": "Competitors (Cuckoo, Construct)",
+  "iterations": 5,
+  "fixture": "Construct",
+  "generator": "Random",
+  "visualization": {
+    "enable": false
+  },
+  "parameter": {
+    "k": null,
+    "s": null,
+    "n_partitions": [
+      1
+    ],
+    "n_threads": [
+      1
+    ],
+    "n_elements": [
+      1000000
+    ]
+  },
+  "optimization": {
+    "Addressing": null,
+    "Hashing": null,
+    "Partitioning": "Disabled",
+    "RegisterSize": null,
+    "SIMD": null,
+    "EarlyStopping": "Disabled",
+    "MultiThreading": "Disabled"
+  },
+  "benchmarks": [
+    {
+      "name": "InitialiseData",
+      "filter": {
+        "type": "Cuckoo",
+        "variant": "Standard4"
+      },
+      "optimization": {
+        "Addressing": "PowerOfTwo",
+        "Hashing": "TwoIndependentMultiplyShift",
+        "RegisterSize": "_64bit",
+        "SIMD": "Scalar"
+      },
+      "parameter": {
+        "k": [
+          8
+        ],
+        "s": [
+          105
+        ]
+      }
+    },
+    {
+      "name": "Efficient_Cuckoo_Standard4_Scalar",
+      "filter": {
+        "type": "EfficientCuckooFilter",
+        "variant": "Standard"
+      },
+      "optimization": {
+        "Addressing": "PowerOfTwo",
+        "Hashing": "TwoIndependentMultiplyShift",
+        "RegisterSize": "_64bit",
+        "SIMD": "Scalar"
+      },
+      "parameter": {
+        "k": [
+          8
+        ],
+        "s": [
+          105
+        ]
+      }
+    },
+    {
+      "name": "Cuckoo_Standard4_Scalar",
+      "filter": {
+        "type": "Cuckoo",
+        "variant": "Standard4"
+      },
+      "optimization": {
+        "Addressing": "PowerOfTwo",
+        "Hashing": "TwoIndependentMultiplyShift",
+        "RegisterSize": "_64bit",
+        "SIMD": "Scalar"
+      },
+      "parameter": {
+        "k": [
+          8
+        ],
+        "s": [
+          105
+        ]
+      }
+    },
+    {
+      "name": "AMD_Morton_Standard3_Scalar",
+      "filter": {
+        "type": "AMDMortonFilter",
+        "variant": "Standard3"
+      },
+      "optimization": {
+        "Addressing": "Lemire",
+        "Hashing": "Murmur",
+        "RegisterSize": "_64bit",
+        "SIMD": "Scalar"
+      },
+      "parameter": {
+        "k": [
+          8
+        ],
+        "s": [
+          101
+        ]
+      }
+    },
+    {
+      "name": "Morton_Standard3_Scalar_Morton",
+      "filter": {
+        "type": "Cuckoo",
+        "variant": "MortonOpt"
+      },
+      "optimization": {
+        "Addressing": "Morton",
+        "Hashing": "Murmur",
+        "RegisterSize": "_64bit",
+        "SIMD": "Scalar"
+      },
+      "parameter": {
+        "k": [
+          8
+        ],
+        "s": [
+          140
+        ]
+      }
+    },
+    {
+      "name": "Morton_Standard3_Scalar",
+      "filter": {
+        "type": "Cuckoo",
+        "variant": "MortonOpt"
+      },
+      "optimization": {
+        "Addressing": "Lemire",
+        "Hashing": "Murmur",
+        "RegisterSize": "_64bit",
+        "SIMD": "Scalar"
+      },
+      "parameter": {
+        "k": [
+          8
+        ],
+        "s": [
+          140
+        ]
+      }
+    }
+  ]
+}

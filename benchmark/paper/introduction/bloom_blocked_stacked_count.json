@@ -1,0 +1,122 @@
+{
+  "name": "Stacked (BloomBlocked, Count)",
+  "iterations": 5,
+  "fixture": "Count",
+  "generator": "Random",
+  "visualization": {
+    "enable": false
+  },
+  "parameter": {
+    "k": [
+      8
+    ],
+    "s": [
+      150
+    ],
+    "n_partitions": [
+      1
+    ],
+    "n_threads": [
+      1
+    ],
+    "n_elements": [
+      {
+        "build": 100000000,
+        "lookup": 100000000,
+        "shared": 10
+      }
+    ]
+  },
+  "optimization": {
+    "Addressing": "Lemire",
+    "Hashing": "Murmur",
+    "Partitioning": null,
+    "RegisterSize": "_64bit",
+    "SIMD": null,
+    "EarlyStopping": "Disabled",
+    "MultiThreading": "Disabled"
+  },
+  "benchmarks": [
+    {
+      "name": "InitialiseData",
+      "filter": {
+        "type": "Bloom",
+        "variant": "Blocked512"
+      },
+      "optimization": {
+        "Partitioning": "Disabled",
+        "SIMD": "Scalar"
+      }
+    },
+    {
+      "name": "BloomBlocked_Lemire_Murmur",
+      "filter": {
+        "type": "Bloom",
+        "variant": "Blocked512"
+      },
+      "optimization": {
+        "Partitioning": "Disabled",
+        "SIMD": "Scalar"
+      }
+    },
+    {
+      "name": "BloomBlocked_Lemire_Murmur_SIMD",
+      "filter": {
+        "type": "Bloom",
+        "variant": "Blocked512"
+      },
+      "optimization": {
+        "Partitioning": "Disabled",
+        "SIMD": "AVX512"
+      }
+    },
+    {
+      "name": "BloomBlocked_Lemire_Murmur_Partitioned",
+      "filter": {
+        "type": "Bloom",
+        "variant": "Blocked512"
+      },
+      "optimization": {
+        "Partitioning": "Enabled",
+        "SIMD": "Scalar"
+      },
+      "parameter": {
+        "n_partitions": [
+          1024
+        ]
+      }
+    },
+    {
+      "name": "BloomBlocked_Lemire_Murmur_SIMD_Partitioned",
+      "filter": {
+        "type": "Bloom",
+        "variant": "Blocked512"
+      },
+      "optimization": {
+        "Partitioning": "Enabled",
+        "SIMD": "AVX512"
+      },
+      "parameter": {
+        "n_partitions": [
+          1024
+        ]
+      }
+    },
+    {
+      "name": "BloomBlocked_Lemire_Murmur_Partitioned_SIMD",
+      "filter": {
+        "type": "Bloom",
+        "variant": "Blocked512"
+      },
+      "optimization": {
+        "Partitioning": "Enabled",
+        "SIMD": "AVX512"
+      },
+      "parameter": {
+        "n_partitions": [
+          1024
+        ]
+      }
+    }
+  ]
+}

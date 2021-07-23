@@ -1,0 +1,668 @@
+{
+  "$schema": "https://json-schema.org/draft-07/schema",
+  "title": "Benchmark Schema",
+  "definitions": {
+    "generator": {
+      "type": "string",
+      "enum": [
+        "Sequential",
+        "Prime",
+        "Random",
+        "RandomHuge",
+        "RandomHuge2",
+        "Skew"
+      ]
+    },
+    "fixture": {
+      "type": "string",
+      "enum": [
+        "Construct",
+        "Count",
+        "MTCount",
+        "Contains",
+        "Partitioning",
+        "FPR"
+      ]
+    },
+    "visualization": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "enable": {
+          "type": "boolean",
+          "default": false
+        },
+        "chart": {
+          "type": "string",
+          "enum": [
+            "line",
+            "bar"
+          ]
+        },
+        "x-axis": {
+          "type": "string",
+          "enum": [
+            "k",
+            "s",
+            "n_partitions",
+            "n_threads",
+            "n_elements_build",
+            "n_elements_lookup",
+            "shared_elements"
+          ]
+        },
+        "y-axis": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "time",
+              "speedup",
+              "throughput",
+              "DTLB-misses",
+              "ITLB-misses",
+              "L1D-misses",
+              "L1I-misses",
+              "LLC-misses",
+              "branch-misses",
+              "cycles",
+              "instructions",
+              "task-clock",
+              "avg_size",
+              "size",
+              "bits",
+              "retries",
+              "fpr"
+            ],
+            "default": []
+          }
+        }
+      },
+      "if": {
+        "properties": {
+          "enable": {
+            "const": true
+          }
+        }
+      },
+      "then": {
+        "if": {
+          "properties": {
+            "chart": {
+              "const": "line"
+            }
+          }
+        },
+        "then": {
+          "required": [
+            "x-axis",
+            "y-axis"
+          ]
+        },
+        "else": {
+          "if": {
+            "properties": {
+              "chart": {
+                "const": "bar"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "y-axis"
+            ]
+          }
+        },
+        "required": [
+          "chart"
+        ]
+      },
+      "required": [
+        "enable"
+      ]
+    },
+    "optimization": {
+      "type": "object",
+      "additionalItems": false,
+      "properties": {
+        "Addressing": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "enum": [
+            null,
+            "PowerOfTwo",
+            "Magic",
+            "Lemire",
+            "Vacuum",
+            "Morton"
+          ]
+        },
+        "Hashing": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "enum": [
+            null,
+            "Identity",
+            "Murmur",
+            "Fasthash",
+            "Cityhash",
+            "TwoIndependentMultiplyShift",
+            "SimpleTabulation",
+            "Mul"
+          ]
+        },
+        "Partitioning": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "enum": [
+            null,
+            "Enabled",
+            "Disabled"
+          ]
+        },
+        "RegisterSize": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "enum": [
+            null,
+            "_32bit",
+            "_64bit"
+          ]
+        },
+        "SIMD": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "enum": [
+            null,
+            "Scalar",
+            "AVX2",
+            "AVX512"
+          ]
+        },
+        "MultiThreading": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "enum": [
+            null,
+            "Enabled",
+            "Disabled"
+          ]
+        }
+      }
+    },
+    "parameter": {
+      "type": "object",
+      "additionalItems": false,
+      "properties": {
+        "k": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 40
+          },
+          "minItems": 1
+        },
+        "s": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "type": "integer"
+          },
+          "minItems": 1
+        },
+        "n_threads": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 80
+          },
+          "minItems": 1
+        },
+        "n_partitions": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "type": "integer",
+            "enum": [
+              1,
+              2,
+              4,
+              8,
+              16,
+              32,
+              64,
+              128,
+              256,
+              512,
+              1024,
+              2048,
+              4096,
+              8192,
+              16384
+            ]
+          },
+          "minItems": 1
+        },
+        "n_elements": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "oneOf": [
+              {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 1000000000
+              },
+              {
+                "type": "object",
+                "additionalItems": false,
+                "properties": {
+                  "build": {
+                    "type": "number",
+                    "minimum": 0,
+                    "maximum": 1000000000
+                  },
+                  "lookup": {
+                    "type": "number",
+                    "minimum": 0,
+                    "maximum": 1000000000
+                  },
+                  "shared": {
+                    "type": "number",
+                    "minimum": 0,
+                    "maximum": 100
+                  }
+                },
+                "required": [
+                  "build",
+                  "lookup",
+                  "shared"
+                ]
+              }
+            ]
+          },
+          "minItems": 1
+        }
+      }
+    },
+    "filter": {
+      "type": "object",
+      "additionalItems": false,
+      "oneOf": [
+        {
+          "properties": {
+            "type": {
+              "type": "string",
+              "const": "Bloom"
+            },
+            "variant": {
+              "type": "string",
+              "enum": [
+                "Naive32",
+                "Naive64",
+                "Blocked32",
+                "Blocked64",
+                "Blocked128",
+                "Blocked256",
+                "Blocked512",
+                "Sectorized128",
+                "Sectorized256",
+                "Sectorized512",
+                "Grouped2",
+                "Grouped4",
+                "Grouped8",
+                "Sectorized128Vertical",
+                "Sectorized256Vertical",
+                "Sectorized512Vertical"
+              ]
+            }
+          }
+        },
+        {
+          "properties": {
+            "type": {
+              "type": "string",
+              "const": "Xor"
+            },
+            "variant": {
+              "type": "string",
+              "enum": [
+                "Standard",
+                "Fuse"
+              ]
+            }
+          }
+        },
+        {
+          "properties": {
+            "type": {
+              "type": "string",
+              "const": "Cuckoo"
+            },
+            "variant": {
+              "oneOf": [
+                {
+                  "type": "string",
+                  "enum": [
+                    "CuckooOpt",
+                    "MortonOpt"
+                  ]
+                },
+                {
+                  "type": "string",
+                  "pattern": "Standard[2-8]"
+                },
+                {
+                  "type": "string",
+                  "pattern": "Morton(2|3|7|15)_[1-9]?[05]_[1-5]?[05]"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "properties": {
+            "type": {
+              "type": "string",
+              "const": "FastfilterBloom"
+            },
+            "variant": {
+              "type": "string",
+              "enum": [
+                "Standard",
+                "Branchless"
+              ]
+            }
+          }
+        },
+        {
+          "properties": {
+            "type": {
+              "type": "string",
+              "const": "FastfilterXor"
+            },
+            "variant": {
+              "type": "string",
+              "enum": [
+                "Standard",
+                "CImplementation",
+                "Compressed"
+              ]
+            }
+          }
+        },
+        {
+          "properties": {
+            "type": {
+              "type": "string",
+              "const": "ImpalaBloom"
+            },
+            "variant": {
+              "type": "string",
+              "enum": [
+                "Standard"
+              ]
+            }
+          }
+        },
+        {
+          "properties": {
+            "type": {
+              "type": "string",
+              "const": "BSDBloom"
+            },
+            "variant": {
+              "type": "string",
+              "enum": [
+                "Naive32",
+                "Blocked32",
+                "Blocked128",
+                "Blocked256",
+                "Blocked512",
+                "Sectorized128",
+                "Sectorized256",
+                "Sectorized512",
+                "Grouped2",
+                "Grouped4",
+                "Grouped8",
+                "Naive32Batched",
+                "Blocked32Batched",
+                "Blocked128Batched",
+                "Blocked256Batched",
+                "Blocked512Batched",
+                "Sectorized128Batched",
+                "Sectorized256Batched",
+                "Sectorized512Batched",
+                "Grouped2Batched",
+                "Grouped4Batched",
+                "Grouped8Batched"
+              ]
+            }
+          }
+        },
+        {
+          "properties": {
+            "type": {
+              "type": "string",
+              "const": "BSDCuckoo"
+            },
+            "variant": {
+              "type": "string",
+              "enum": [
+                "Standard1",
+                "Standard2",
+                "Standard4",
+                "Standard1Batched",
+                "Standard2Batched",
+                "Standard4Batched"
+              ]
+            }
+          }
+        },
+        {
+          "properties": {
+            "type": {
+              "type": "string",
+              "const": "EfficientCuckooFilter"
+            },
+            "variant": {
+              "type": "string",
+              "enum": [
+                "Standard",
+                "SemiSorted"
+              ]
+            }
+          }
+        },
+        {
+          "properties": {
+            "type": {
+              "type": "string",
+              "const": "VacuumFilter"
+            },
+            "variant": {
+              "type": "string",
+              "enum": [
+                "Standard",
+                "SemiSorted"
+              ]
+            }
+          }
+        },
+        {
+          "properties": {
+            "type": {
+              "type": "string",
+              "const": "AMDMortonFilter"
+            },
+            "variant": {
+              "type": "string",
+              "enum": [
+                "Standard1",
+                "Standard3",
+                "Standard7",
+                "Standard15"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "benchmark": {
+      "type": "object",
+      "additionalItems": false,
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "color": {
+          "type": "string",
+          "enum": [
+            "black",
+            "blue",
+            "lightblue",
+            "green",
+            "lightgreen",
+            "orange",
+            "lightorange",
+            "red",
+            "lightred"
+          ]
+        },
+        "marker": {
+          "type": "string",
+          "enum": [
+            "circle",
+            "triangle",
+            "square",
+            "diamond"
+          ]
+        },
+        "filter": {
+          "$ref": "#/definitions/filter"
+        },
+        "parameter": {
+          "$ref": "#/definitions/parameter"
+        },
+        "optimization": {
+          "$ref": "#/definitions/optimization"
+        }
+      },
+      "required": [
+        "name",
+        "filter"
+      ]
+    }
+  },
+  "type": "object",
+  "additionalItems": false,
+  "properties": {
+    "name": {
+      "type": "string"
+    },
+    "iterations": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 1000
+    },
+    "threads": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 1000
+    },
+    "preprocess": {
+      "type": "string",
+      "enum": [
+        "preprocess_s",
+        "preprocess_s_morton",
+        "preprocess_n_elements_log",
+        "preprocess_s_and_n_elements_log"
+      ]
+    },
+    "generator": {
+      "$ref": "#/definitions/generator"
+    },
+    "fixture": {
+      "$ref": "#/definitions/fixture"
+    },
+    "visualization": {
+      "$ref": "#/definitions/visualization"
+    },
+    "optimization": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/optimization"
+        },
+        {
+          "required": [
+            "Addressing",
+            "Hashing",
+            "Partitioning",
+            "RegisterSize",
+            "SIMD",
+            "EarlyStopping",
+            "MultiThreading"
+          ]
+        }
+      ]
+    },
+    "parameter": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/parameter"
+        },
+        {
+          "required": [
+            "k",
+            "s",
+            "n_threads",
+            "n_partitions"
+          ]
+        }
+      ]
+    },
+    "benchmarks": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/benchmark"
+      },
+      "minItems": 1
+    }
+  },
+  "required": [
+    "name",
+    "iterations",
+    "generator",
+    "fixture",
+    "visualization",
+    "optimization",
+    "parameter",
+    "benchmarks"
+  ]
+}

@@ -1,0 +1,67 @@
+{
+  "name": "Competitors (Impala Bloom, Construct)",
+  "iterations": 5,
+  "fixture": "Construct",
+  "generator": "Random",
+  "visualization": {
+    "enable": false
+  },
+  "parameter": {
+    "k": [
+      8
+    ],
+    "s": [
+      150
+    ],
+    "n_partitions": [
+      1
+    ],
+    "n_threads": [
+      1
+    ],
+    "n_elements": [
+      1000000
+    ]
+  },
+  "optimization": {
+    "Addressing": "Lemire",
+    "Hashing": "Mul",
+    "Partitioning": "Disabled",
+    "RegisterSize": "_32bit",
+    "SIMD": null,
+    "EarlyStopping": "Disabled",
+    "MultiThreading": "Disabled"
+  },
+  "benchmarks": [
+    {
+      "name": "InitialiseData",
+      "filter": {
+        "type": "Bloom",
+        "variant": "Sectorized256Vertical"
+      },
+      "optimization": {
+        "SIMD": "AVX2"
+      }
+    },
+    {
+      "name": "Impala_Bloom_Sectorized256_AVX2",
+      "filter": {
+        "type": "ImpalaBloom",
+        "variant": "Standard"
+      },
+      "optimization": {
+        "SIMD": "AVX2"
+      }
+    },
+    {
+      "name": "Bloom_Sectorized256_AVX2",
+      "filter": {
+        "type": "Bloom",
+        "variant": "Sectorized256Vertical"
+      },
+      "optimization": {
+        "SIMD": "AVX2"
+      }
+    }
+  ]
+}

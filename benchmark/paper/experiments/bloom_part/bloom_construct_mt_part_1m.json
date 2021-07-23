@@ -1,0 +1,171 @@
+{
+  "name": "Bloom Construct Multi-Threaded 1M (part)",
+  "iterations": 5,
+  "preprocess": "preprocess_s",
+  "fixture": "Construct",
+  "generator": "Random",
+  "visualization": {
+    "enable": false
+  },
+  "parameter": {
+    "k": null,
+    "s": [ 400, 2600, 100, 100, 2600 ],
+    "n_partitions": [ 32, 64, 128, 256, 512, 1024, 2048, 4096 ],
+    "n_threads": [ 10 ],
+    "n_elements": [ 1000000 ]
+  },
+  "optimization": {
+    "Addressing": "Lemire",
+    "Hashing": "Murmur",
+    "Partitioning": "Enabled",
+    "RegisterSize": "_64bit",
+    "SIMD": null,
+    "EarlyStopping": "Disabled",
+    "MultiThreading": "Enabled"
+  },
+  "benchmarks": [
+    {
+      "name": "Bloom_Naive64_Part_Scalar",
+      "filter": {
+        "type": "Bloom",
+        "variant": "Naive64"
+      },
+      "optimization": {
+        "SIMD": "Scalar"
+      },
+      "parameter": {
+        "k": [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25 ]
+      }
+    },
+    {
+      "name": "Bloom_Blocked64_Part_Scalar",
+      "filter": {
+        "type": "Bloom",
+        "variant": "Blocked64"
+      },
+      "optimization": {
+        "SIMD": "Scalar"
+      },
+      "parameter": {
+        "k": [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25 ]
+      }
+    },
+    {
+      "name": "Bloom_Blocked512_Part_Scalar",
+      "filter": {
+        "type": "Bloom",
+        "variant": "Blocked512"
+      },
+      "optimization": {
+        "SIMD": "Scalar"
+      },
+      "parameter": {
+        "k": [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25 ]
+      }
+    },
+    {
+      "name": "Bloom_Sectorized128_Part_Scalar",
+      "filter": {
+        "type": "Bloom",
+        "variant": "Sectorized128"
+      },
+      "optimization": {
+        "SIMD": "Scalar"
+      },
+      "parameter": {
+        "k": [ 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24 ]
+      }
+    },
+    {
+      "name": "Bloom_Sectorized256_Part_Scalar",
+      "filter": {
+        "type": "Bloom",
+        "variant": "Sectorized256"
+      },
+      "optimization": {
+        "SIMD": "Scalar"
+      },
+      "parameter": {
+        "k": [ 4, 8, 12, 16, 20, 24 ]
+      }
+    },
+    {
+      "name": "Bloom_Sectorized512_Part_Scalar",
+      "filter": {
+        "type": "Bloom",
+        "variant": "Sectorized512"
+      },
+      "optimization": {
+        "SIMD": "Scalar"
+      },
+      "parameter": {
+        "k": [ 8, 16, 24 ]
+      }
+    },
+    {
+      "name": "Bloom_Grouped2_Part_Scalar",
+      "filter": {
+        "type": "Bloom",
+        "variant": "Grouped2"
+      },
+      "optimization": {
+        "SIMD": "Scalar"
+      },
+      "parameter": {
+        "k": [ 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24 ]
+      }
+    },
+    {
+      "name": "Bloom_Grouped4_Part_Scalar",
+      "filter": {
+        "type": "Bloom",
+        "variant": "Grouped4"
+      },
+      "optimization": {
+        "SIMD": "Scalar"
+      },
+      "parameter": {
+        "k": [ 4, 8, 12, 16, 20, 24 ]
+      }
+    },
+    {
+      "name": "Bloom_Sectorized128Vertical_Part_AVX512",
+      "filter": {
+        "type": "Bloom",
+        "variant": "Sectorized128Vertical"
+      },
+      "optimization": {
+        "SIMD": "AVX512"
+      },
+      "parameter": {
+        "k": [ 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24 ]
+      }
+    },
+    {
+      "name": "Bloom_Sectorized256Vertical_Part_AVX512",
+      "filter": {
+        "type": "Bloom",
+        "variant": "Sectorized256Vertical"
+      },
+      "optimization": {
+        "SIMD": "AVX512"
+      },
+      "parameter": {
+        "k": [ 4, 8, 12, 16, 20, 24 ]
+      }
+    },
+    {
+      "name": "Bloom_Sectorized512Vertical_Part_AVX512",
+      "filter": {
+        "type": "Bloom",
+        "variant": "Sectorized512Vertical"
+      },
+      "optimization": {
+        "SIMD": "AVX512"
+      },
+      "parameter": {
+        "k": [ 8, 16, 24 ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "name": "Morton Construct Multi-Threading 1M (part)",
+  "iterations": 5,
+  "preprocess": "preprocess_s",
+  "fixture": "Construct",
+  "generator": "Random",
+  "visualization": {
+    "enable": false
+  },
+  "parameter": {
+    "k": [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25 ],
+    "s": [ 400, 2600, 100, 100, 2600 ],
+    "n_partitions": [ 32, 64, 128, 256, 512, 1024, 2048, 4096 ],
+    "n_threads": [ 10 ],
+    "n_elements": [ 1000000 ]
+  },
+  "optimization": {
+    "Addressing": "Lemire",
+    "Hashing": "Murmur",
+    "Partitioning": "Enabled",
+    "RegisterSize": "_64bit",
+    "SIMD": "Scalar",
+    "EarlyStopping": "Disabled",
+    "MultiThreading": "Enabled"
+  },
+  "benchmarks": [
+    {
+      "name": "Morton_Part_Scalar",
+      "filter": {
+        "type": "Cuckoo",
+        "variant": "MortonOpt"
+      }
+    }
+  ]
+}

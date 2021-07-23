@@ -1,0 +1,180 @@
+{
+  "name": "Fingerprint-Based Failure Elements",
+  "iterations": 100,
+  "threads": 20,
+  "preprocess": "preprocess_n_elements_log",
+  "fixture": "FPR",
+  "generator": "Prime",
+  "visualization": {
+    "enable": false
+  },
+  "parameter": {
+    "execution_time": 1,
+    "k": null,
+    "s": null,
+    "n_partitions": [
+      1
+    ],
+    "n_threads": [
+      1
+    ],
+    "n_elements": [
+      10,
+      1,
+      7,
+      10,
+      0
+    ]
+  },
+  "optimization": {
+    "Addressing": "Magic",
+    "Hashing": "Murmur",
+    "Partitioning": "Disabled",
+    "RegisterSize": "_64bit",
+    "SIMD": "Scalar",
+    "EarlyStopping": "Disabled",
+    "MultiThreading": "Disabled"
+  },
+  "benchmarks": [
+    {
+      "name": "Cuckoo2",
+      "filter": {
+        "type": "Cuckoo",
+        "variant": "Standard2"
+      },
+      "parameter": {
+        "k": [
+          8
+        ],
+        "s": [
+          110,
+          111,
+          112,
+          113,
+          114,
+          115,
+          116,
+          117,
+          118,
+          119,
+          120,
+          122,
+          124,
+          126,
+          128,
+          130,
+          135,
+          140,
+          145,
+          150
+        ]
+      }
+    },
+    {
+      "name": "Cuckoo3",
+      "filter": {
+        "type": "Cuckoo",
+        "variant": "Standard3"
+      },
+      "parameter": {
+        "k": [
+          8
+        ],
+        "s": [
+          105,
+          106,
+          107,
+          108,
+          109,
+          110,
+          111,
+          112,
+          113,
+          114,
+          115,
+          116,
+          118,
+          120,
+          125,
+          130,
+          135,
+          140,
+          145,
+          150
+        ]
+      }
+    },
+    {
+      "name": "Cuckoo4",
+      "filter": {
+        "type": "Cuckoo",
+        "variant": "Standard4"
+      },
+      "parameter": {
+        "k": [
+          8
+        ],
+        "s": [
+          100,
+          101,
+          102,
+          103,
+          104,
+          105,
+          106,
+          107,
+          108,
+          109,
+          110,
+          112,
+          114,
+          116,
+          118,
+          120,
+          125,
+          130,
+          135,
+          140,
+          145,
+          150
+        ]
+      }
+    },
+    {
+      "name": "Cuckoo8",
+      "filter": {
+        "type": "Cuckoo",
+        "variant": "Standard8"
+      },
+      "parameter": {
+        "k": [
+          8
+        ],
+        "s": [
+          100,
+          101,
+          102,
+          103,
+          104,
+          105,
+          106,
+          107,
+          108,
+          109,
+          110,
+          112,
+          114,
+          116,
+          118,
+          120,
+          125,
+          130,
+          135,
+          140,
+          145,
+          150
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,114 @@
+{
+  "name": "Bloom Grouped (perfopt)",
+  "iterations": 5,
+  "preprocess": "preprocess_s_and_n_elements_log",
+  "fixture": "MTCount",
+  "generator": "RandomHuge2",
+  "visualization": {
+    "enable": false
+  },
+  "parameter": {
+    "k": null,
+    "s": [
+      400,
+      2600,
+      100,
+      100,
+      2600
+    ],
+    "n_partitions": [ 32, 64, 128, 256, 512, 1024, 2048, 4096 ],
+    "n_threads": [ 10 ],
+    "n_elements": [
+      {
+        "build": 10,
+        "lookup": 10,
+        "shared": 10
+      },
+      {
+        "build": 4,
+        "lookup": 8,
+        "shared": 10
+      },
+      {
+        "build": 8,
+        "lookup": 8,
+        "shared": 10
+      },
+      {
+        "build": 25,
+        "lookup": 0,
+        "shared": 10
+      },
+      {
+        "build": 1000,
+        "lookup": 100000000,
+        "shared": 10
+      }
+    ]
+  },
+  "optimization": {
+    "Addressing": "Lemire",
+    "Hashing": "Murmur",
+    "Partitioning": null,
+    "RegisterSize": "_64bit",
+    "SIMD": "AVX512",
+    "EarlyStopping": "Disabled",
+    "MultiThreading": "Disabled"
+  },
+  "benchmarks": [
+    {
+      "name": "Bloom_Grouped2_Nonpart_AVX512",
+      "filter": {
+        "type": "Bloom",
+        "variant": "Grouped2"
+      },
+      "optimization": {
+        "Partitioning": "Disabled"
+      },
+      "parameter": {
+        "k": [ 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24 ],
+        "n_partitions": [ 1 ]
+      }
+    },
+    {
+      "name": "Bloom_Grouped2_Part_AVX512",
+      "filter": {
+        "type": "Bloom",
+        "variant": "Grouped2"
+      },
+      "optimization": {
+        "Partitioning": "Enabled"
+      },
+      "parameter": {
+        "k": [ 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24 ]
+      }
+    },
+    {
+      "name": "Bloom_Grouped4_Nonpart_AVX512",
+      "filter": {
+        "type": "Bloom",
+        "variant": "Grouped4"
+      },
+      "optimization": {
+        "Partitioning": "Disabled"
+      },
+      "parameter": {
+        "k": [ 4, 8, 12, 16, 20, 24 ],
+        "n_partitions": [ 1 ]
+      }
+    },
+    {
+      "name": "Bloom_Grouped4_Part_AVX512",
+      "filter": {
+        "type": "Bloom",
+        "variant": "Grouped4"
+      },
+      "optimization": {
+        "Partitioning": "Enabled"
+      },
+      "parameter": {
+        "k": [ 4, 8, 12, 16, 20, 24 ]
+      }
+    }
+  ]
+}

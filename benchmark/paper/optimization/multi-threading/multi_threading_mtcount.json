@@ -1,0 +1,119 @@
+{
+  "name": "Multi-Threading (MTCount)",
+  "iterations": 5,
+  "fixture": "MTCount",
+  "generator": "Prime",
+  "visualization": {
+    "enable": false
+  },
+  "parameter": {
+    "k": [
+      8
+    ],
+    "s": null,
+    "n_partitions": [
+      128,
+      256,
+      512,
+      1024,
+      2048,
+      4096,
+      8192,
+      16384
+    ],
+    "n_threads": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20
+    ],
+    "n_elements": [
+      {
+        "build": 100000000,
+        "lookup": 100000000,
+        "shared": 10
+      }
+    ]
+  },
+  "optimization": {
+    "Addressing": "Lemire",
+    "Hashing": "Murmur",
+    "Partitioning": null,
+    "RegisterSize": "_64bit",
+    "SIMD": "Scalar",
+    "EarlyStopping": "Disabled",
+    "MultiThreading": "Disabled"
+  },
+  "benchmarks": [
+    {
+      "name": "InitialiseData",
+      "filter": {
+        "type": "Bloom",
+        "variant": "Blocked512"
+      },
+      "optimization": {
+        "Partitioning": "Disabled"
+      },
+      "parameter": {
+        "s": [
+          150
+        ],
+        "n_partitions": [
+          1
+        ],
+        "n_threads": [
+          1
+        ]
+      }
+    },
+    {
+      "name": "BloomBlockedMT",
+      "filter": {
+        "type": "Bloom",
+        "variant": "Blocked512"
+      },
+      "optimization": {
+        "Partitioning": "Disabled"
+      },
+      "parameter": {
+        "s": [
+          150
+        ],
+        "n_partitions": [
+          1
+        ]
+      }
+    },
+    {
+      "name": "BloomBlockedMTPartitioned",
+      "filter": {
+        "type": "Bloom",
+        "variant": "Blocked512"
+      },
+      "optimization": {
+        "Partitioning": "Enabled"
+      },
+      "parameter": {
+        "s": [
+          150
+        ]
+      }
+    }
+  ]
+}

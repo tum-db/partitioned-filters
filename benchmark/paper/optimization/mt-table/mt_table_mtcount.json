@@ -1,0 +1,193 @@
+{
+  "name": "MT-Table (MTCount)",
+  "iterations": 5,
+  "fixture": "MTCount",
+  "generator": "Prime",
+  "visualization": {
+    "enable": false
+  },
+  "parameter": {
+    "k": [
+      8
+    ],
+    "s": null,
+    "n_partitions": [
+      1024
+    ],
+    "n_threads": [
+      10,
+      20
+    ],
+    "n_elements": [
+      {
+        "build": 100000000,
+        "lookup": 100000000,
+        "shared": 10
+      }
+    ]
+  },
+  "optimization": {
+    "Addressing": "Lemire",
+    "Hashing": "Murmur",
+    "Partitioning": null,
+    "RegisterSize": "_64bit",
+    "SIMD": "Scalar",
+    "EarlyStopping": "Disabled",
+    "MultiThreading": "Disabled"
+  },
+  "benchmarks": [
+    {
+      "name": "InitialiseData",
+      "filter": {
+        "type": "Bloom",
+        "variant": "Blocked512"
+      },
+      "optimization": {
+        "Partitioning": "Disabled"
+      },
+      "parameter": {
+        "s": [
+          150
+        ],
+        "n_partitions": [
+          1
+        ],
+        "n_threads": [
+          1
+        ]
+      }
+    },
+    {
+      "name": "BloomBlockedMT",
+      "filter": {
+        "type": "Bloom",
+        "variant": "Blocked512"
+      },
+      "optimization": {
+        "Partitioning": "Disabled"
+      },
+      "parameter": {
+        "s": [
+          150
+        ],
+        "n_partitions": [
+          1
+        ]
+      }
+    },
+    {
+      "name": "CuckooMT",
+      "filter": {
+        "type": "Cuckoo",
+        "variant": "CuckooOpt"
+      },
+      "optimization": {
+        "Partitioning": "Disabled"
+      },
+      "parameter": {
+        "s": [
+          106
+        ],
+        "n_partitions": [
+          1
+        ]
+      }
+    },
+    {
+      "name": "MortonMT",
+      "filter": {
+        "type": "Cuckoo",
+        "variant": "MortonOpt"
+      },
+      "optimization": {
+        "Partitioning": "Disabled"
+      },
+      "parameter": {
+        "s": [
+          138
+        ],
+        "n_partitions": [
+          1
+        ]
+      }
+    },
+    {
+      "name": "XorMT",
+      "filter": {
+        "type": "Xor",
+        "variant": "Standard"
+      },
+      "optimization": {
+        "Partitioning": "Disabled"
+      },
+      "parameter": {
+        "s": [
+          123
+        ],
+        "n_partitions": [
+          1
+        ]
+      }
+    },
+    {
+      "name": "BloomBlockedMTPartitioned",
+      "filter": {
+        "type": "Bloom",
+        "variant": "Blocked512"
+      },
+      "optimization": {
+        "Partitioning": "Enabled"
+      },
+      "parameter": {
+        "s": [
+          150
+        ]
+      }
+    },
+    {
+      "name": "CuckooMTPartitioned",
+      "filter": {
+        "type": "Cuckoo",
+        "variant": "CuckooOpt"
+      },
+      "optimization": {
+        "Partitioning": "Enabled"
+      },
+      "parameter": {
+        "s": [
+          106
+        ]
+      }
+    },
+    {
+      "name": "MortonMTPartitioned",
+      "filter": {
+        "type": "Cuckoo",
+        "variant": "MortonOpt"
+      },
+      "optimization": {
+        "Partitioning": "Enabled"
+      },
+      "parameter": {
+        "s": [
+          138
+        ]
+      }
+    },
+    {
+      "name": "XorMTPartitioned",
+      "filter": {
+        "type": "Xor",
+        "variant": "Standard"
+      },
+      "optimization": {
+        "Partitioning": "Enabled"
+      },
+      "parameter": {
+        "s": [
+          123
+        ]
+      }
+    }
+  ]
+}

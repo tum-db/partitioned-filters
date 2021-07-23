@@ -1,0 +1,91 @@
+{
+  "name": "Stacked (Xor, Construct)",
+  "iterations": 5,
+  "fixture": "Construct",
+  "generator": "Random",
+  "visualization": {
+    "enable": false
+  },
+  "parameter": {
+    "k": [
+      8
+    ],
+    "s": [
+      123
+    ],
+    "n_partitions": [
+      1
+    ],
+    "n_threads": [
+      1
+    ],
+    "n_elements": [
+      100000000
+    ]
+  },
+  "optimization": {
+    "Addressing": "Lemire",
+    "Hashing": "Murmur",
+    "Partitioning": null,
+    "RegisterSize": "_64bit",
+    "SIMD": null,
+    "EarlyStopping": "Disabled",
+    "MultiThreading": "Disabled"
+  },
+  "benchmarks": [
+    {
+      "name": "InitialiseData",
+      "filter": {
+        "type": "Xor",
+        "variant": "Standard"
+      },
+      "optimization": {
+        "Partitioning": "Disabled",
+        "SIMD": "Scalar"
+      }
+    },
+    {
+      "name": "Xor_Lemire_Murmur",
+      "filter": {
+        "type": "Xor",
+        "variant": "Standard"
+      },
+      "optimization": {
+        "Partitioning": "Disabled",
+        "SIMD": "Scalar"
+      }
+    },
+    {
+      "name": "Xor_Lemire_Murmur_Partitioned",
+      "filter": {
+        "type": "Xor",
+        "variant": "Standard"
+      },
+      "optimization": {
+        "Partitioning": "Enabled",
+        "SIMD": "Scalar"
+      },
+      "parameter": {
+        "n_partitions": [
+          1024
+        ]
+      }
+    },
+    {
+      "name": "Xor_Lemire_Murmur_Partitioned_SIMD",
+      "filter": {
+        "type": "Xor",
+        "variant": "Standard"
+      },
+      "optimization": {
+        "Partitioning": "Enabled",
+        "SIMD": "AVX2"
+      },
+      "parameter": {
+        "n_partitions": [
+          1024
+        ]
+      }
+    }
+  ]
+}

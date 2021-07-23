@@ -1,0 +1,235 @@
+{
+  "name": "Addressing (Construct)",
+  "iterations": 5,
+  "preprocess": "preprocess_n_elements_log",
+  "fixture": "Construct",
+  "generator": "Random",
+  "visualization": {
+    "enable": false
+  },
+  "parameter": {
+    "k": [
+      8
+    ],
+    "s": null,
+    "n_partitions": [
+      1
+    ],
+    "n_threads": [
+      1
+    ],
+    "n_elements": [
+      10,
+      5,
+      8,
+      2,
+      100000
+    ]
+  },
+  "optimization": {
+    "Addressing": null,
+    "Hashing": "Murmur",
+    "Partitioning": "Disabled",
+    "RegisterSize": "_64bit",
+    "SIMD": "Scalar",
+    "EarlyStopping": "Disabled",
+    "MultiThreading": "Disabled"
+  },
+  "benchmarks": [
+    {
+      "name": "InitialiseData",
+      "filter": {
+        "type": "Bloom",
+        "variant": "Blocked512"
+      },
+      "optimization": {
+        "Addressing": "Lemire"
+      },
+      "parameter": {
+        "s": [
+          150
+        ]
+      }
+    },
+    {
+      "name": "BloomBlockedPowerOfTwo",
+      "filter": {
+        "type": "Bloom",
+        "variant": "Blocked512"
+      },
+      "optimization": {
+        "Addressing": "PowerOfTwo"
+      },
+      "parameter": {
+        "s": [
+          150
+        ]
+      }
+    },
+    {
+      "name": "BloomBlockedMagic",
+      "filter": {
+        "type": "Bloom",
+        "variant": "Blocked512"
+      },
+      "optimization": {
+        "Addressing": "Magic"
+      },
+      "parameter": {
+        "s": [
+          150
+        ]
+      }
+    },
+    {
+      "name": "BloomBlockedLemire",
+      "filter": {
+        "type": "Bloom",
+        "variant": "Blocked512"
+      },
+      "optimization": {
+        "Addressing": "Lemire"
+      },
+      "parameter": {
+        "s": [
+          150
+        ]
+      }
+    },
+    {
+      "name": "CuckooPowerOfTwo",
+      "filter": {
+        "type": "Cuckoo",
+        "variant": "CuckooOpt"
+      },
+      "optimization": {
+        "Addressing": "PowerOfTwo"
+      },
+      "parameter": {
+        "s": [
+          106
+        ]
+      }
+    },
+    {
+      "name": "CuckooMagic",
+      "filter": {
+        "type": "Cuckoo",
+        "variant": "CuckooOpt"
+      },
+      "optimization": {
+        "Addressing": "Magic"
+      },
+      "parameter": {
+        "s": [
+          106
+        ]
+      }
+    },
+    {
+      "name": "CuckooLemire",
+      "filter": {
+        "type": "Cuckoo",
+        "variant": "CuckooOpt"
+      },
+      "optimization": {
+        "Addressing": "Lemire"
+      },
+      "parameter": {
+        "s": [
+          106
+        ]
+      }
+    },
+    {
+      "name": "MortonPowerOfTwo",
+      "filter": {
+        "type": "Cuckoo",
+        "variant": "MortonOpt"
+      },
+      "optimization": {
+        "Addressing": "PowerOfTwo"
+      },
+      "parameter": {
+        "s": [
+          138
+        ]
+      }
+    },
+    {
+      "name": "MortonMagic",
+      "filter": {
+        "type": "Cuckoo",
+        "variant": "MortonOpt"
+      },
+      "optimization": {
+        "Addressing": "Magic"
+      },
+      "parameter": {
+        "s": [
+          138
+        ]
+      }
+    },
+    {
+      "name": "MortonLemire",
+      "filter": {
+        "type": "Cuckoo",
+        "variant": "MortonOpt"
+      },
+      "optimization": {
+        "Addressing": "Lemire"
+      },
+      "parameter": {
+        "s": [
+          138
+        ]
+      }
+    },
+    {
+      "name": "XorPowerOfTwo",
+      "filter": {
+        "type": "Xor",
+        "variant": "Standard"
+      },
+      "optimization": {
+        "Addressing": "PowerOfTwo"
+      },
+      "parameter": {
+        "s": [
+          123
+        ]
+      }
+    },
+    {
+      "name": "XorMagic",
+      "filter": {
+        "type": "Xor",
+        "variant": "Standard"
+      },
+      "optimization": {
+        "Addressing": "Magic"
+      },
+      "parameter": {
+        "s": [
+          123
+        ]
+      }
+    },
+    {
+      "name": "XorLemire",
+      "filter": {
+        "type": "Xor",
+        "variant": "Standard"
+      },
+      "optimization": {
+        "Addressing": "Lemire"
+      },
+      "parameter": {
+        "s": [
+          123
+        ]
+      }
+    }
+  ]
+}

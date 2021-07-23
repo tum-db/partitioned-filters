@@ -1,0 +1,84 @@
+#include <filter.hpp>
+#include <parameter/parameter.hpp>
+#include <bloom/bloom_parameter.hpp>
+#include <xor/xor_parameter.hpp>
+#include <cuckoo/cuckoo_parameter.hpp>
+#include <reference/fastfilter/bloom/fastfilter_bloom_parameter.hpp>
+#include <reference/fastfilter/xor/fastfilter_xor_parameter.hpp>
+#include <reference/impala/impala_bloom_parameter.hpp>
+#include <reference/bsd/bloom/bsd_bloom_parameter.hpp>
+#include <reference/bsd/cuckoo/bsd_cuckoo_parameter.hpp>
+#include <reference/efficient_cuckoofilter/efficient_cuckoofilter_parameter.hpp>
+#include <reference/vacuumfilter/vacuumfilter_parameter.hpp>
+#include <reference/amd_mortonfilter/amd_mortonfilter_parameter.hpp>
+#include <generator/generator.hpp>
+#include <fixture/fixture.hpp>
+#include <benchmark_config.hpp>
+#include <main.hpp>
+
+namespace Bloom = filters::bloom;
+namespace Xor = filters::nxor;
+namespace Cuckoo = filters::cuckoo;
+namespace FastfilterBloom = filters::fastfilter::bloom;
+namespace FastfilterXor = filters::fastfilter::_xor;
+namespace ImpalaBloom = filters::impala;
+namespace BSDBloom = filters::bsd::bloom;
+namespace BSDCuckoo = filters::bsd::cuckoo;
+namespace EfficientCuckooFilter = filters::efficientcuckoofilter;
+namespace VacuumFilter = filters::vacuumfilter;
+namespace AMDMortonFilter = filters::amdmortonfilter;
+
+using AddressingMode = filters::parameter::AddressingMode;
+using HashingMode = filters::parameter::HashingMode;
+using Partitioning = filters::parameter::Partitioning;
+using RegisterSize = filters::parameter::RegisterSize;
+using SIMD = filters::parameter::SIMD;
+using MultiThreading = filters::parameter::MultiThreading;
+
+{% for benchmark in benchmarks %}
+{% for k in benchmark.parameter.k %}
+
+/**
+ *  Benchmark:    {{benchmark.name}}
+ */
+
+using {{benchmark.name}}_{{k}}_FP = {{benchmark.filter.type}}::{{benchmark.filter.variant}}<{{k}}>;
+using {{benchmark.name}}_{{k}}_OP = filters::parameter::OptimizationParameter<
+                                        AddressingMode::{{benchmark.optimization.Addressing}},
+                                        HashingMode::{{benchmark.optimization['Hashing']}},
+                                        Partitioning::{{benchmark.optimization.Partitioning}},
+                                        RegisterSize::{{benchmark.optimization.RegisterSize}},
+                                        SIMD::{{benchmark.optimization.SIMD}},
+                                        MultiThreading::{{benchmark.optimization.MultiThreading}}>;
+using {{benchmark.name}}_{{k}}_Config = filters::BenchmarkConfig<
+                                            filters::FilterType::{{benchmark.filter.type}},
+                                            {{benchmark.name}}_{{k}}_FP,
+                                            {{benchmark.name}}_{{k}}_OP,
+                                            {{k}},
+                                            filters::GeneratorType::{{generator}},
+                                            filters::FixtureType::{{fixture}}>;
+using {{benchmark.name}}_{{k}} = filters::Fixture<{{benchmark.name}}_{{k}}_Config::fixture, {{benchmark.name}}_{{k}}_Config>;
+
+BENCHMARK_DEFINE_F({{benchmark.name}}_{{k}}, {{fixture}})(benchmark::State &state) {
+    this->benchmark(state);
+}
+BENCHMARK_REGISTER_F({{benchmark.name}}_{{k}}, {{fixture}})
+    ->ArgsProduct({
+        { {{ benchmark.parameter.s|join(", ") }} },
+        { {{ benchmark.parameter.n_threads|join(", ") }} },
+        { {{ benchmark.parameter.n_partitions|join(", ") }} },
+        { {{benchmark.parameter.n_elements[0].build}} {% for n_elements in benchmark.parameter.n_elements[1:1000] %}, {{n_elements.build}}{% endfor %} },
+        { {{ benchmark.parameter.n_elements[0].lookup }} },
+        { {{ benchmark.parameter.n_elements[0].shared }} }
+    })
+    ->Iterations({{iterations}})
+    {% if threads is defined %}
+    ->Threads({{threads}})
+    {% endif %}
+    ->Unit(benchmark::kMillisecond)->UseManualTime();
+{% endfor %}
+
+{% endfor %}
+
+MAIN();
+
