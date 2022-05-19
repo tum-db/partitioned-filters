@@ -381,8 +381,18 @@ for name in benchmarks["filters"]:
         filename = base_path + '{0}/{0}_{1}_{2}.csv'.format(name, "count", size)
         analyzeCount(read_benchmark(filename), size)
         if size != "10k":
-            filename = base_path + '{0}_part/{0}_{1}_{2}.csv'.format(name, "count_part", size)
-        analyzeCount(read_benchmark(filename), size)
+            if name == "bloom" and size == "100m":
+                filename = base_path + '{0}_part/{0}_{1}_{2}_naive.csv'.format(name, "count_part", size)
+                analyzeCount(read_benchmark(filename), size)
+                filename = base_path + '{0}_part/{0}_{1}_{2}_blocked.csv'.format(name, "count_part", size)
+                analyzeCount(read_benchmark(filename), size)
+                filename = base_path + '{0}_part/{0}_{1}_{2}_grouped.csv'.format(name, "count_part", size)
+                analyzeCount(read_benchmark(filename), size)
+                filename = base_path + '{0}_part/{0}_{1}_{2}_sectorized.csv'.format(name, "count_part", size)
+                analyzeCount(read_benchmark(filename), size)
+            else:
+                filename = base_path + '{0}_part/{0}_{1}_{2}.csv'.format(name, "count_part", size)
+                analyzeCount(read_benchmark(filename), size)
 
 benchmarks = {"size": ["1m", "100m"], "filters": ["bloom", "xor", "cuckoo", "fuse"]}
 for name in benchmarks["filters"]:
