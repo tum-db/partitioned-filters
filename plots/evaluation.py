@@ -1133,3 +1133,89 @@ drawSeparatorLine(ax2, "100m", "gray")
 ax2.set_title("100\,M Elements")
 cbar.set_label('Speedup [\%]')
 savefig("./pdf/evaluation/vectorization", 0.03)
+
+
+
+def plotEssential(ax):
+    format_axes_imshow(ax)
+    preparePlot(ax, "100m")
+    data = mapData(aggmap["100m"], mapBestTp)
+    imshow = ax.imshow(data,cmap="plasma", aspect="auto", norm=LogNorm(vmin=1e8, vmax=1.2e9))
+    names = mapData(aggmap["100m"], mapBestTpName)
+    drawScatterSymbols(ax, names, info)
+    drawSeparatorLine(ax, "100m")
+    ax.set_aspect("equal")
+    return imshow
+    
+
+info = {"B":["$\\circ$","Bloom"],"C":["$\\vee$","Cuckoo"],"M":["$\\wedge$","Morton"],"X":["$\\times$","Xor"]}
+    
+latexify(cm2inch(9), cm2inch(6.6),2)  
+fig = plt.figure(constrained_layout=False)
+spec = fig.add_gridspec(ncols=3, nrows=2, width_ratios=[20,20,1],hspace=0.25,wspace=0,left=0.18,right=0.85)
+
+def mapBestTp(ps):
+    return robustMax([p["throughput"] for p in ps if "Part" not in p["name"] and "AVX" not in p["name"]])
+
+def mapBestTpName(ps):
+    best = getBestIf(ps, lambda p: "Part" not in p["name"] and "AVX" not in p["name"])
+    return best["name"][0] if best else ""
+
+ax1 = fig.add_subplot(spec[0, 0])
+plotEssential(ax1)
+ax1.set_title("Scalar, no Partitioning", pad=3)
+ax1.set_xlabel(None)
+ax1.set_xticks([])
+
+def mapBestTp(ps):
+    return robustMax([p["throughput"] for p in ps if "Part" not in p["name"]])
+
+def mapBestTpName(ps):
+    best = getBestIf(ps, lambda p: "Part" not in p["name"])
+    return best["name"][0] if best else ""
+
+ax2 = fig.add_subplot(spec[0, 1])
+imshow = plotEssential(ax2)
+
+#cbar = plt.colorbar(imshow,)
+#
+def specialFormat(x, _):
+    if str(x)[0] == "3":
+        return "{}\,M".format(round(x/1e6))
+##cbar.ax.yaxis.set_minor_formatter(ticker.FuncFormatter(specialFormat))
+ax2.set_title("only Vectorization", pad=3)
+#
+ax2.set_ylabel(None,labelpad=-5)
+ax2.set_yticks([])
+ax2.set_xlabel(None)
+ax2.set_xticks([])
+
+def mapBestTp(ps):
+    return robustMax([p["throughput"] for p in ps if "AVX" not in p["name"]])
+
+def mapBestTpName(ps):
+    best = getBestIf(ps, lambda p: "AVX" not in p["name"])
+    return best["name"][0] if best else ""
+ax3 = fig.add_subplot(spec[1, 0])
+plotEssential(ax3)
+ax3.set_title("only Partitioning", pad=3)
+
+def mapBestTp(ps):
+    return robustMax([p["throughput"] for p in ps])
+
+def mapBestTpName(ps):
+    best = getBest(ps)
+    return best["name"][0] if best else ""
+ax4 = fig.add_subplot(spec[1, 1])
+plotEssential(ax4)
+ax4.set_title("All optimizations", pad=3)
+ax4.set_ylabel(None,labelpad=-5)
+ax4.set_yticks([])
+
+cbar_ax = fig.add_subplot(spec[:, 2])
+cbar = fig.colorbar(imshow, cax=cbar_ax, pad = 0, format=billions)
+cbar.ax.yaxis.set_minor_formatter(ticker.FuncFormatter(billions))
+cbar.set_label('Throughput [Keys/s]')
+#plt.tight_layout(h_pad=1.5)
+
+savefig("./pdf/evaluation/bestLookup100M", 0.03)
