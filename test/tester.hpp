@@ -12,7 +12,7 @@ static constexpr size_t max_n = 1000000;
 
 #else
 
-static constexpr size_t max_n = 1000;
+static constexpr size_t max_n = 1000000;
 
 #endif
 

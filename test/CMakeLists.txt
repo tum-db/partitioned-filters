@@ -14,11 +14,6 @@ foreach (ONE_TEST_CPP ${TEST_CPP})
     set_target_properties(${TARGET_NAME} PROPERTIES OUTPUT_NAME ${ONE_TEST_EXEC})
     target_link_libraries(${TARGET_NAME} PRIVATE gtest gmock Threads::Threads filters::filters perfevent::perfevent)
 
-    setup_target_for_coverage_lcov(
-            NAME coverage_${TARGET_NAME}
-            EXECUTABLE ${TARGET_NAME}
-            EXCLUDE)
-
     add_test(filters ${TARGET_NAME})
     message(STATUS "    ${TARGET_NAME}")
 endforeach ()

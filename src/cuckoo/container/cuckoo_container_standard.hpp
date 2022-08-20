@@ -121,7 +121,7 @@ namespace filters::cuckoo {
 
             n_bytes = simd::valign<Vector>(last_offset);
             if (n_bytes > 0) {
-                filter = reinterpret_cast<uint8_t *>(simd::valloc<Vector>(n_bytes, 0, true));
+                filter = reinterpret_cast<uint8_t *>(simd::valloc<Vector>(n_bytes + 64, 0, true));
             }
         }
 
@@ -166,7 +166,7 @@ namespace filters::cuckoo {
                 // has_value is faster than a loop
                 auto *bucket = reinterpret_cast<T *>(filter + byte_offset.vector +
                                                      address.vector * bits_per_bucket / 8);
-                return has_value<k, slots_per_bucket>(*bucket, fingerprint.vector) != 0;
+                return has_value<k, slots_per_bucket>(reinterpret_cast<unaligned<T> *>(bucket)->value, fingerprint.vector) != 0;
             } else if constexpr (not Vector::avx) {
                 const T bucket = simd::gatheru_bits<bits_per_bucket>(address, filter, byte_offset, mask).vector;
                 return has_value<k, slots_per_bucket>(bucket, fingerprint.vector) != 0;
@@ -203,7 +203,7 @@ namespace filters::cuckoo {
 
                 // This is faster for small filters
                 // If the number of elements exceeds 10 million, a loop is faster for slots_per_bucket < 4
-                const Bucket zero = has_zero<k, slots_per_bucket>(*bucket);
+                const Bucket zero = has_zero<k, slots_per_bucket>(reinterpret_cast<unaligned<T> *>(bucket)->value);
                 const size_t zero_index = simd::tzcount(zero);
                 if (zero > 0) {
                     reinterpret_cast<Fingerprint *>(bucket)[zero_index / k] = fingerprint.vector;

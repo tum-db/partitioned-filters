@@ -143,6 +143,8 @@ namespace filters::simd {
             free(mem);
         }
         #else
+        static_cast<void>(n_bytes);
+        static_cast<void>(numa);
         free(mem);
         #endif
     }
@@ -152,7 +154,7 @@ namespace filters::simd {
     static Vector _gatheru_bits(const Vector &bit_address, const uint8_t *base, const typename Vector::M &mask) {
         using T = typename Vector::T;
         const Vector value_mask = Vector((n_bits == sizeof(T) * 8)
-                                         ? -1
+                                         ? static_cast<T>(-1)
                                          : (1ull << n_bits) - 1);
 
         if constexpr (_nbit_aligned and math::is_power_of_two(n_bits)) {
@@ -162,7 +164,7 @@ namespace filters::simd {
         } else if constexpr (not Vector::avx and sizeof(T) * 8 >= 8 + n_bits) {
             const T byte_address = bit_address.vector / 8;
             const T shift_right = bit_address.vector % 8;
-            return Vector(*reinterpret_cast<const T *>(base + byte_address) >> shift_right) & value_mask;
+            return Vector(unaligned_load<T>(base + byte_address) >> shift_right) & value_mask;
         } else {
             const Vector bucket_address = bit_address >> math::const_log2(sizeof(T) * 8);
             const Vector shift_right = bit_address & Vector((1ull << math::const_log2(sizeof(T) * 8)) - 1);
@@ -195,7 +197,7 @@ namespace filters::simd {
     _scatteru_bits(const Vector &bit_address, uint8_t *base, const Vector &value, const typename Vector::M &mask) {
         using T = typename Vector::T;
         const Vector value_mask = Vector((n_bits == sizeof(T) * 8)
-                                         ? -1
+                                         ? static_cast<T>(-1)
                                          : (1ull << n_bits) - 1);
         const Vector masked_value = value & value_mask;
 
@@ -209,8 +211,8 @@ namespace filters::simd {
         } else if constexpr (not Vector::avx && sizeof(T) * 8 >= 8 + n_bits) {
             const T byte_address = bit_address.vector / 8;
             const T shift_left = bit_address.vector % 8;
-            *reinterpret_cast<T *>(base + byte_address) &= (value_mask << shift_left).negate().vector;
-            *reinterpret_cast<T *>(base + byte_address) |= (masked_value << shift_left).vector;
+            reinterpret_cast<unaligned<T> *>(base + byte_address)->value &= (value_mask << shift_left).negate().vector;
+            reinterpret_cast<unaligned<T> *>(base + byte_address)->value |= (masked_value << shift_left).vector;
         } else {
             const Vector bucket_address = bit_address >> math::const_log2(sizeof(T) * 8);
             const Vector shift_left = bit_address & Vector((1ull << math::const_log2(sizeof(T) * 8)) - 1);

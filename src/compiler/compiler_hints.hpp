@@ -27,3 +27,19 @@
 #ifndef unlikely
 #define unlikely(expr) __builtin_expect((expr), 0)
 #endif
+
+template<class T>
+struct [[gnu::packed]] unaligned {
+	    T value;
+};
+
+template<class T>
+forceinline T unaligned_load(const void *ptr) noexcept {
+	    return reinterpret_cast<const unaligned<T> *>(ptr)->value;
+}
+
+template<class T>
+forceinline void unaligned_store(void *ptr, T value) noexcept {
+	    reinterpret_cast<unaligned<T> *>(ptr)->value = value;
+}
+
