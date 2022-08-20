@@ -61,7 +61,7 @@ namespace filters {
     static std::atomic_size_t successes{0}, iterations{0};
 
     size_t perfBenchmarkParallel(::benchmark::State &state, const std::function<bool()> &function) {
-        if (state.thread_index == 0) {
+        if (state.thread_index() == 0) {
             successes = 0;
             iterations = 0;
         }
@@ -76,7 +76,7 @@ namespace filters {
             }
         }
 
-        if (state.thread_index == 0) {
+        if (state.thread_index() == 0) {
             state.counters["failures"] = static_cast<double>(state.max_iterations - successes);
         }
         return successes;

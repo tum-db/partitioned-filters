@@ -23,7 +23,7 @@ namespace filters {
         std::atomic_size_t atomic_iteration{0}, false_positives{0}, elements{0};
 
         void SetUp(const ::benchmark::State &state) override {
-            if (state.thread_index == 0) {
+            if (state.thread_index() == 0) {
                 size_t n_elements_build = state.range(static_cast<size_t>(FixtureParameter::n_elements_build));
                 size_t n_elements_lookup = state.range(static_cast<size_t>(FixtureParameter::n_elements_lookup));
                 size_t shared_elements = state.range(static_cast<size_t>(FixtureParameter::shared_elements));
@@ -65,7 +65,7 @@ namespace filters {
                 return success;
             });
 
-            if (state.thread_index == 0) {
+            if (state.thread_index() == 0) {
                 state.counters["fpr"] = (static_cast<double>(false_positives) / static_cast<double>(elements));
                 state.counters["bits"] = static_cast<double>(filter_size * 8) / (static_cast<double>(state.range(
                         static_cast<size_t>(FixtureParameter::n_elements_build))));

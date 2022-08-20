@@ -10,7 +10,7 @@ ExternalProject_Add(
         benchmark_src
         PREFIX "vendor/benchmark"
         GIT_REPOSITORY "https://github.com/google/benchmark.git"
-        GIT_TAG 73d4d5e8d6d449fc8663765a42aa8aeeee844489
+        GIT_TAG 0d98dba29d66e93259db7daa53a9327df767a415
         TIMEOUT 10
         CMAKE_ARGS
         -DCMAKE_INSTALL_PREFIX=${CMAKE_BINARY_DIR}/vendor/benchmark
