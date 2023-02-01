@@ -1,7 +1,7 @@
 set(library_name filters)
 
 # build library
-add_library(${library_name} INTERFACE)
+add_library(${library_name} STATIC)
 target_include_directories(${library_name} INTERFACE $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}>)
 target_link_libraries(${library_name} INTERFACE cityhash libdivide fastfilter impala efficient_cuckoofilter amd_mortonfilter vacuumfilter)
 
