@@ -204,9 +204,9 @@ namespace filters::bloom {
                                 const M found = _contains(container, values, hash, block_offset, Vector::mask(1), l);
 
                                 if constexpr (n_lanes == 1) {
-                                    counter += found;
+                                    local_counter += found;
                                 } else {
-                                    counter += Vector::popcount_mask(found & pext_mask);
+                                    local_counter += Vector::popcount_mask(found & pext_mask);
                                 }
                             }
                         }
@@ -229,9 +229,9 @@ namespace filters::bloom {
                                 const M found = _contains(container, values, hash, block_offset, m, l);
 
                                 if constexpr (n_lanes == 1) {
-                                    counter += found;
+                                    local_counter += found;
                                 } else {
-                                    counter += Vector::popcount_mask(found & pext_mask);
+                                    local_counter += Vector::popcount_mask(found & pext_mask);
                                 }
                             }
                         }

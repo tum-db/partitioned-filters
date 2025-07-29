@@ -119,17 +119,17 @@ namespace filters::bloom {
                             if (begin + Vector::n_elements <= end) {
                                 Vector values = Vector::load(begin);
                                 for (; begin + 2 * Vector::n_elements <= end;) {
-                                    counter += Vector::popcount_mask(contains(container, values, i));
+                                    local_counter += Vector::popcount_mask(contains(container, values, i));
                                     begin += Vector::n_elements;
                                     values = index.gather(begin, Vector::mask(1));
                                 }
-                                counter += Vector::popcount_mask(contains(container, values, i));
+                                local_counter += Vector::popcount_mask(contains(container, values, i));
                                 begin += Vector::n_elements;
                             }
                         } else {
                             for (; begin + Vector::n_elements <= end; begin += Vector::n_elements) {
                                 const Vector values = Vector::load(begin);
-                                counter += Vector::popcount_mask(contains(container, values, i));
+                                local_counter += Vector::popcount_mask(contains(container, values, i));
                             }
                         }
 

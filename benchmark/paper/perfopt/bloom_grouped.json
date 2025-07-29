@@ -48,7 +48,7 @@
   },
   "optimization": {
     "Addressing": "Lemire",
-    "Hashing": "Murmur",
+    "Hashing": "Mul",
     "Partitioning": null,
     "RegisterSize": "_64bit",
     "SIMD": "AVX512",

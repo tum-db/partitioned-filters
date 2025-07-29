@@ -1,0 +1,75 @@
+{
+  "name": "Bloom New FPR",
+  "iterations": 100,
+  "threads": 16,
+  "preprocess": "preprocess_s",
+  "fixture": "FPR",
+  "generator": "Random",
+  "visualization": {
+    "enable": false
+  },
+  "parameter": {
+    "k": null,
+    "s": [
+      500,
+      2500,
+      25,
+      100,
+      2500
+    ],
+    "n_partitions": [
+      1
+    ],
+    "n_threads": [
+      1
+    ],
+    "n_elements": [
+      {
+        "build": 1000000,
+        "lookup": 10000000,
+        "shared": 0
+      }
+    ]
+  },
+  "optimization": {
+    "Addressing": "PowerOfTwo",
+    "Hashing": "Mul",
+    "Partitioning": "Disabled",
+    "RegisterSize": "_64bit",
+    "SIMD": null,
+    "EarlyStopping": "Disabled",
+    "MultiThreading": "Disabled"
+  },
+  "benchmarks": [
+    {
+      "name": "UmbraBloom",
+      "filter": {
+        "type": "UmbraBloom",
+        "variant": "Standard"
+      },
+      "parameter": {
+        "k": [
+          4
+        ]
+      },
+      "optimization": {
+        "SIMD": "Scalar"
+      }
+    },
+    {
+      "name": "PeterBloom",
+      "filter": {
+        "type": "PeterBloom",
+        "variant": "Standard"
+      },
+      "parameter": {
+        "k": [
+          7
+        ]
+      },
+      "optimization": {
+        "SIMD": "AVX512"
+      }
+    }
+  ]
+}

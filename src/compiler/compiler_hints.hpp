@@ -6,7 +6,7 @@
 #endif
 #else
 #ifndef forceinline
-#define forceinline
+#define forceinline inline
 #endif
 #endif
 

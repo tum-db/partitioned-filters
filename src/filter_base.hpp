@@ -4,15 +4,19 @@
 #include <stdexcept>
 #include <simd/vector.hpp>
 
-namespace filters {
-
-    enum class FilterType : size_t {
+namespace filters
+{
+    enum class FilterType : size_t
+    {
         Bloom,
+        MaskBloom,
         Xor,
         Cuckoo,
         FastfilterBloom,
         FastfilterXor,
         ImpalaBloom,
+        PeterBloom,
+        UmbraBloom,
         BSDBloom,
         BSDCuckoo,
         EfficientCuckooFilter,
@@ -20,9 +24,9 @@ namespace filters {
         VacuumFilter
     };
 
-    template<FilterType filter, typename FilterParameter, size_t k, typename OptimizationParameter>
-    struct Filter {
-
+    template <FilterType filter, typename FilterParameter, size_t k, typename OptimizationParameter>
+    struct Filter
+    {
         static constexpr bool supports_add = false;
         static constexpr bool supports_add_partition = false;
 
@@ -30,45 +34,54 @@ namespace filters {
         using T = typename Vector::T;
         using M = typename Vector::M;
 
-        Filter(size_t /*s*/, size_t /*n_partitions*/, size_t /*n_threads*/, size_t /*n_tasks_per_level*/) {
+        Filter(size_t /*s*/, size_t /*n_partitions*/, size_t /*n_threads*/, size_t /*n_tasks_per_level*/)
+        {
             throw std::logic_error{"not implemented!"};
         }
 
-        void init(const T *) {
+        void init(const T*)
+        {
             throw std::logic_error{"not implemented!"};
         }
 
-        bool contains(const T &) {
+        bool contains(const T&)
+        {
             throw std::logic_error{"not implemented!"};
         }
 
-        bool add(const T &) {
+        bool add(const T&)
+        {
             throw std::logic_error{"not implemented!"};
         }
 
-        bool construct(T *, size_t) {
+        bool construct(T*, size_t)
+        {
             throw std::logic_error{"not implemented!"};
         }
 
-        size_t count(T *, size_t) {
+        size_t count(T*, size_t)
+        {
             throw std::logic_error{"not implemented!"};
         }
 
-        size_t size() {
+        size_t size()
+        {
             throw std::logic_error{"not implemented!"};
         }
 
-        size_t avg_size() {
+        size_t avg_size()
+        {
             throw std::logic_error{"not implemented!"};
         };
 
-        size_t retries() {
+        size_t retries()
+        {
             throw std::logic_error{"not implemented"};
         }
 
-        std::string to_string() {
+        std::string to_string()
+        {
             throw std::logic_error{"not implemented!"};
         }
     };
-
 } // filters

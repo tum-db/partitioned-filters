@@ -5,6 +5,8 @@
 #include <cuckoo/cuckoo_parameter.hpp>
 #include <reference/fastfilter/bloom/fastfilter_bloom_parameter.hpp>
 #include <reference/fastfilter/xor/fastfilter_xor_parameter.hpp>
+#include <reference/peter/peter_bloom_parameter.hpp>
+#include <reference/umbra/umbra_bloom_parameter.hpp>
 #include <reference/impala/impala_bloom_parameter.hpp>
 #include <reference/bsd/bloom/bsd_bloom_parameter.hpp>
 #include <reference/bsd/cuckoo/bsd_cuckoo_parameter.hpp>
@@ -22,6 +24,8 @@ namespace Cuckoo = filters::cuckoo;
 namespace FastfilterBloom = filters::fastfilter::bloom;
 namespace FastfilterXor = filters::fastfilter::_xor;
 namespace ImpalaBloom = filters::impala;
+namespace PeterBloom = filters::peter;
+namespace UmbraBloom = filters::umbra;
 namespace BSDBloom = filters::bsd::bloom;
 namespace BSDCuckoo = filters::bsd::cuckoo;
 namespace EfficientCuckooFilter = filters::efficientcuckoofilter;

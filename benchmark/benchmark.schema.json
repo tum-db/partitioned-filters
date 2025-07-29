@@ -421,6 +421,34 @@
           "properties": {
             "type": {
               "type": "string",
+              "const": "UmbraBloom"
+            },
+            "variant": {
+              "type": "string",
+              "enum": [
+                "Standard"
+              ]
+            }
+          }
+        },
+        {
+          "properties": {
+            "type": {
+              "type": "string",
+              "const": "PeterBloom"
+            },
+            "variant": {
+              "type": "string",
+              "enum": [
+                "Standard"
+              ]
+            }
+          }
+        },
+        {
+          "properties": {
+            "type": {
+              "type": "string",
               "const": "ImpalaBloom"
             },
             "variant": {

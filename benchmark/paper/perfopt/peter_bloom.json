@@ -1,5 +1,5 @@
 {
-  "name": "Morton (perfopt)",
+  "name": "Peter Bloom (perfopt)",
   "iterations": 5,
   "preprocess": "preprocess_s_and_n_elements_log",
   "fixture": "MTCount",
@@ -8,7 +8,9 @@
     "enable": false
   },
   "parameter": {
-    "k": [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25 ],
+    "k": [
+      7
+    ],
     "s": [
       400,
       2600,
@@ -16,8 +18,12 @@
       100,
       2600
     ],
-    "n_partitions": [ 32, 64, 128, 256, 512, 1024, 2048, 4096 ],
-    "n_threads": [ 10 ],
+    "n_partitions": [
+      1
+    ],
+    "n_threads": [
+      48
+    ],
     "n_elements": [
       {
         "build": 10,
@@ -47,36 +53,33 @@
     ]
   },
   "optimization": {
-    "Addressing": "Lemire",
+    "Addressing": "PowerOfTwo",
     "Hashing": "Mul",
-    "Partitioning": null,
+    "Partitioning": "Disabled",
     "RegisterSize": "_64bit",
-    "SIMD": "AVX512",
+    "SIMD": null,
     "EarlyStopping": "Disabled",
     "MultiThreading": "Disabled"
   },
   "benchmarks": [
     {
-      "name": "Morton_Nonpart_AVX512",
+      "name": "PeterBloom_Nonpart_Scalar",
       "filter": {
-        "type": "Cuckoo",
-        "variant": "MortonOpt"
+        "type": "PeterBloom",
+        "variant": "Standard"
       },
       "optimization": {
-        "Partitioning": "Disabled"
-      },
-      "parameter": {
-        "n_partitions": [ 1 ]
+        "SIMD": "Scalar"
       }
     },
     {
-      "name": "Morton_Part_AVX512",
+      "name": "PeterBloom_Nonpart_AVX512",
       "filter": {
-        "type": "Cuckoo",
-        "variant": "MortonOpt"
+        "type": "PeterBloom",
+        "variant": "Standard"
       },
       "optimization": {
-        "Partitioning": "Enabled"
+        "SIMD": "AVX512"
       }
     }
   ]
