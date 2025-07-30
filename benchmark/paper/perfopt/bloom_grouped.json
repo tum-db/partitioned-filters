@@ -17,7 +17,7 @@
       2600
     ],
     "n_partitions": [ 32, 64, 128, 256, 512, 1024, 2048, 4096 ],
-    "n_threads": [ 10 ],
+    "n_threads": [ 48 ],
     "n_elements": [
       {
         "build": 10,
