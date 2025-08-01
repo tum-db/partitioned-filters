@@ -2092,13 +2092,13 @@ __m128i libdivide_s64_branchfree_do_vector(__m128i numers, const struct libdivid
             return div.recover();
         }
 
-        bool operator==(const divider<T, ALGO> &other) const {
+        /*bool operator==(const divider<T, ALGO> &other) const {
             return div.denom.magic == other.denom.magic && div.denom.more == other.denom.more;
         }
 
         bool operator!=(const divider<T, ALGO> &other) const {
             return !(*this == other);
-        }
+        }*/
 
         #if defined(LIBDIVIDE_VECTOR_TYPE)
         // Treats the vector as packed integer values with the same type as
