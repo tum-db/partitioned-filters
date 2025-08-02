@@ -1,0 +1,139 @@
+{
+  "name": "test (perfopt)",
+  "iterations": 10,
+  "preprocess": "preprocess_s_and_n_elements_log",
+  "fixture": "MTCount",
+  "generator": "Random",
+  "visualization": {
+    "enable": false
+  },
+  "parameter": {
+    "k": null,
+    "s": [
+      1600,
+      1600,
+      100,
+      100,
+      2600
+    ],
+    "n_partitions": [
+      1
+    ],
+    "n_threads": [
+      1
+    ],
+    "n_elements": [
+      {
+        "build": 10,
+        "lookup": 10,
+        "shared": 10
+      },
+      {
+        "build": 5,
+        "lookup": 5,
+        "shared": 10
+      },
+      {
+        "build": 5,
+        "lookup": 5,
+        "shared": 10
+      },
+      {
+        "build": 25,
+        "lookup": 0,
+        "shared": 10
+      },
+      {
+        "build": 100000000,
+        "lookup": 100000000,
+        "shared": 10
+      }
+    ]
+  },
+  "optimization": {
+    "Addressing": "PowerOfTwo",
+    "Hashing": "Identity",
+    "Partitioning": "Disabled",
+    "RegisterSize": "_64bit",
+    "SIMD": null,
+    "EarlyStopping": "Disabled",
+    "MultiThreading": "Disabled"
+  },
+  "benchmarks": [
+    {
+      "name": "UmbraBloom_Nonpart_Scalar",
+      "filter": {
+        "type": "UmbraBloom",
+        "variant": "Standard"
+      },
+      "parameter": {
+        "k": [
+          4
+        ]
+      },
+      "optimization": {
+        "SIMD": "Scalar"
+      }
+    },
+    {
+      "name": "UmbraBloom_Nonpart_AVX512_16lanes",
+      "filter": {
+        "type": "UmbraBloom",
+        "variant": "Standard"
+      },
+      "parameter": {
+        "k": [
+          4
+        ]
+      },
+      "optimization": {
+        "SIMD": "AVX512"
+      }
+    },
+    {
+      "name": "UmbraBloom_Nonpart_AVX512_8lanes",
+      "filter": {
+        "type": "UmbraBloom",
+        "variant": "Standard"
+      },
+      "parameter": {
+        "k": [
+          4
+        ]
+      },
+      "optimization": {
+        "SIMD": "AVX2"
+      }
+    },
+    {
+      "name": "PeterBloom_Nonpart_Scalar",
+      "filter": {
+        "type": "PeterBloom",
+        "variant": "Standard"
+      },
+      "parameter": {
+        "k": [
+          7
+        ]
+      },
+      "optimization": {
+        "SIMD": "Scalar"
+      }
+    },
+    {
+      "name": "PeterBloom_Nonpart_AVX512",
+      "filter": {
+        "type": "PeterBloom",
+        "variant": "Standard"
+      },
+      "parameter": {
+        "k": [
+          7
+        ]
+      },
+      "optimization": {
+        "SIMD": "AVX512"
+      }
+    }
+  ]
+}

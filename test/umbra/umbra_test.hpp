@@ -3,8 +3,7 @@
 #include <cstddef>
 #include "../filter_test.hpp"
 
-namespace test::umbra
-{
+namespace test::umbra {
     namespace umbra = filters::umbra;
     namespace parameter = filters::parameter;
 
@@ -24,7 +23,9 @@ namespace test::umbra
     template <int64_t expected_fp>
     using UmbraBloomSmall1 = FilterTestConfig<UmbraBloom, umbra::Standard, k, parameter::PowerOfTwoMulScalar64, n_s, s, 0, 0, 0, expected_fp>;
     template <int64_t expected_fp>
-    using UmbraBloomSmall2 = FilterTestConfig<UmbraBloom, umbra::Standard, k, parameter::PowerOfTwoMulScalar64MT, n_s, s, 0, 2, 2, expected_fp>;
+    using UmbraBloomSmall2 = FilterTestConfig<UmbraBloom, umbra::Standard, k, parameter::PowerOfTwoMulAVX51264MT, n_s, s, 0, 2, 2, expected_fp>;
+    template <int64_t expected_fp>
+    using UmbraBloomSmall4 = FilterTestConfig<UmbraBloom, umbra::Standard, k, parameter::PowerOfTwoMulAVX264MT, n_s, s, 0, 2, 2, expected_fp>;
     template <int64_t expected_fp>
     using UmbraBloomSmall3 = FilterTestConfig<UmbraBloom, umbra::Standard, k, parameter::PowerOfTwoMurmurScalar64, n_s, s, 0, 0, 0, expected_fp>;
 
@@ -37,14 +38,15 @@ namespace test::umbra
     template <int64_t expected_fp>
     using UmbraBloomLarge2 = FilterTestConfig<UmbraBloom, umbra::Standard, k, parameter::PowerOfTwoMurmurScalar64, n_l, s, 0, 0, 0, expected_fp>;
     template <int64_t expected_fp>
-    using UmbraBloomLarge3 = FilterTestConfig<UmbraBloom, umbra::Standard, k, parameter::PowerOfTwoMurmurScalar64MT, n_l, s, 0, 4, 16, expected_fp>;
-
+    using UmbraBloomLarge3 = FilterTestConfig<UmbraBloom, umbra::Standard, k, parameter::PowerOfTwoMurmurAVX51264MT, n_l, s, 0, 4, 16, expected_fp>;
+    template <int64_t expected_fp>
+    using UmbraBloomLarge4 = FilterTestConfig<UmbraBloom, umbra::Standard, k, parameter::PowerOfTwoMurmurAVX264MT, n_l, s, 0, 4, 16, expected_fp>;
 
     /*
      * Test Types
      */
 
     using UmbraBloomTestTypes = ::testing::Types<
-        UmbraBloomSmall1<132>, UmbraBloomSmall2<132>, UmbraBloomSmall3<130>,
-        UmbraBloomLarge1<101597>, UmbraBloomLarge2<125215>, UmbraBloomLarge3<125215>>;
+        UmbraBloomSmall1<132>, UmbraBloomSmall2<132>, UmbraBloomSmall4<132>, UmbraBloomSmall3<130>,
+        UmbraBloomLarge1<101597>, UmbraBloomLarge2<125215>, UmbraBloomLarge3<125215>, UmbraBloomLarge4<125215>>;
 }

@@ -14,14 +14,12 @@
 
 #define BF_RESTRICT __restrict__
 
-namespace filters
-{
+namespace filters {
     template <parameter::HashingMode hashingMode>
     uint32_t containsMany(int num, uint32_t num_blocks, const uint64_t* BF_RESTRICT values, const uint32_t* BF_RESTRICT bf);
 
     template <typename OP>
-    struct Filter<FilterType::PeterBloom, peter::Standard<7>, 7, OP>
-    {
+    struct Filter<FilterType::PeterBloom, peter::Standard<7>, 7, OP> {
         static constexpr bool supports_add = false;
         static constexpr bool supports_add_partition = false;
 
@@ -43,32 +41,31 @@ namespace filters
         size_t s;
         uint32_t num_blocks;
         uint32_t num_blocks_log;
-        std::vector<uint32_t> blocks;
+        uint32_t* blocks = nullptr;
         task::TaskQueue<OP::multiThreading> queue;
 
         Filter(size_t s, size_t, size_t n_threads, size_t n_tasks_per_level)
-            : s(s), n_partitions(n_partitions), queue(n_threads, n_tasks_per_level)
-        {
-        }
+            : s(s), n_partitions(n_partitions), queue(n_threads, n_tasks_per_level) {}
 
-        ~Filter()
-        {
+        ~Filter() {
+            if (blocks) {
+                free(blocks);
+            }
         }
 
         forceinline
 
-        void init(const T* histogram)
-        {
+        void init(const T* histogram) {
             num_blocks = *histogram * k * s / 100 / (sizeof(uint32_t) * 8) + 1;
             num_blocks_log = static_cast<uint32_t>(std::log2(num_blocks)) + 1;
             num_blocks = std::min(1U << num_blocks_log, MAX_NUM_BLOCKS);
 
-            blocks.resize(num_blocks);
+            blocks = static_cast<uint32_t*>(aligned_alloc(64, sizeof(uint32_t) * num_blocks));
+            std::memset(blocks, 0, sizeof(uint32_t) * num_blocks);
         }
 
-        forceinline bool contains(const T& value, const size_t = 0) const
-        {
-            auto*BF_RESTRICT bf = blocks.data();
+        forceinline bool contains(const T& value, const size_t = 0) const {
+            auto*BF_RESTRICT bf = blocks;
             const uint64_t h = Hasher::hash(Scalar(value)).vector;
             uint32_t key_lo = static_cast<uint32_t>(h);
             uint32_t key_hi = h >> 32;
@@ -87,9 +84,8 @@ namespace filters
         }
 
 
-        forceinline bool add(const T& value, const size_t = 0)
-        {
-            auto* bf = blocks.data();
+        forceinline bool add(const T& value, const size_t = 0) {
+            auto* bf = blocks;
             const T h = Hasher::hash(Scalar(value)).vector;
             int32_t key_lo = reinterpret_cast<const uint32_t* BF_RESTRICT>(&h)[0];
             uint32_t key_hi = reinterpret_cast<const uint32_t* BF_RESTRICT>(&h)[1];
@@ -109,57 +105,44 @@ namespace filters
             return true;
         }
 
-        bool construct(T* values, size_t length)
-        {
+        bool construct(T* values, size_t length) {
             T histogram = length;
             init(&histogram);
-            for (size_t i = 0; i < length; i++)
-            {
+            for (size_t i = 0; i < length; i++) {
                 add(values[i]);
             }
             return true;
         }
 
-        size_t count(T* values, size_t length)
-        {
-            if constexpr (OP::multiThreading == parameter::MultiThreading::Disabled)
-            {
-                if constexpr (OP::simd == parameter::SIMD::Scalar)
-                {
+        size_t count(T* values, size_t length) {
+            if constexpr (OP::multiThreading == parameter::MultiThreading::Disabled) {
+                if constexpr (OP::simd == parameter::SIMD::Scalar) {
                     size_t counter = 0;
-                    for (size_t i = 0; i < length; i++)
-                    {
+                    for (size_t i = 0; i < length; i++) {
                         counter += contains(values[i]);
                     }
                     return counter;
                 }
-                else
-                {
-                    return containsMany<OP::hashingMode>(length, num_blocks, values, blocks.data());
+                else {
+                    return containsMany<OP::hashingMode>(length, num_blocks, values, blocks);
                 }
             }
-            else
-            {
+            else {
                 std::atomic<size_t> counter{0};
 
                 size_t begin = 0;
-                for (size_t i = queue.get_n_tasks_per_level(); i > 0; i--)
-                {
+                for (size_t i = queue.get_n_tasks_per_level(); i > 0; i--) {
                     const size_t end = begin + (length - begin) / i;
-                    queue.add_task([this, &counter, values, begin, end](size_t)
-                    {
-                        if constexpr (OP::simd == parameter::SIMD::Scalar)
-                        {
+                    queue.add_task([this, &counter, values, begin, end](size_t) {
+                        if constexpr (OP::simd == parameter::SIMD::Scalar) {
                             size_t local_counter = 0;
-                            for (size_t i = begin; i < end; i++)
-                            {
+                            for (size_t i = begin; i < end; i++) {
                                 local_counter += contains(values[i]);
                             }
                             counter += local_counter;
                         }
-                        else
-                        {
-                            counter += containsMany<OP::hashingMode>(end - begin, num_blocks, &values[begin], blocks.data());
+                        else {
+                            counter += containsMany<OP::hashingMode>(end - begin, num_blocks, &values[begin], blocks);
                         }
                     });
                     begin = end;
@@ -170,25 +153,21 @@ namespace filters
             }
         }
 
-        size_t size()
-        {
-            return blocks.size() * sizeof(uint32_t);
+        size_t size() {
+            return num_blocks * sizeof(uint32_t);
         }
 
-        size_t avg_size()
-        {
+        size_t avg_size() {
             // no partitioning available
             return size();
         }
 
-        size_t retries()
-        {
+        size_t retries() {
             // cannot get the number of retries needed for building from the implementation
             return 0;
         }
 
-        std::string to_string()
-        {
+        std::string to_string() {
             std::string s = "\n{\n";
             s += "\t\"k\": " + std::to_string(8) + ",\n";
             s += "\t\"size\": " + std::to_string(size() * 8) + " bits,\n";

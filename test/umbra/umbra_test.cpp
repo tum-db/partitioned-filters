@@ -3,7 +3,7 @@
 
 namespace test::umbra
 {
-    INSTANTIATE_TYPED_TEST_CASE_P(ImpalaBloomTestTypes, FilterTest, UmbraBloomTestTypes);
+    INSTANTIATE_TYPED_TEST_CASE_P(UmbraBloomTestTypes, FilterTest, UmbraBloomTestTypes);
 }
 
 MAIN();
