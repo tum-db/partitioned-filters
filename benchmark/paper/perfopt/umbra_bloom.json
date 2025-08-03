@@ -57,7 +57,7 @@
     "Hashing": "Mul",
     "Partitioning": "Disabled",
     "RegisterSize": "_64bit",
-    "SIMD": "Scalar",
+    "SIMD": null,
     "EarlyStopping": "Disabled",
     "MultiThreading": "Disabled"
   },
@@ -67,6 +67,19 @@
       "filter": {
         "type": "UmbraBloom",
         "variant": "Standard"
+      },
+      "optimization": {
+        "SIMD": "Scalar"
+      }
+    },
+    {
+      "name": "UmbraBloom_Nonpart_AVX512",
+      "filter": {
+        "type": "UmbraBloom",
+        "variant": "Standard"
+      },
+      "optimization": {
+        "SIMD": "AVX512"
       }
     }
   ]
