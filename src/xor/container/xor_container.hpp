@@ -34,7 +34,7 @@ namespace filters::nxor {
                                                      seeds(other.seeds), base(other.base) {
             other.fingerprints = nullptr;
             for (size_t i = 0; i < offsets.size(); i++) {
-                this->offsets[i] = other.sets[i];
+                this->offsets[i] = other.offsets[i];
                 other.offsets[i] = 0;
             }
         }
